@@ -126,7 +126,7 @@ public class RNG implements Serializable {
     /**
      * Returns a value from an even distribution from inner (inclusive) to outer
      * (exclusive). Both inner and outer can be positive or negative, and unlike with
-     * {@link #nextInt(int, int)}, they don't have any requirement to be less than or
+     * {@link #between(int, int)}, they don't have any requirement to be less than or
      * greater than the other (though if they are equal, this will always return inner).
      *
      * @param inner the inner (smaller absolute value) bound on the return value (inclusive)

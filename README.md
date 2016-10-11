@@ -14,4 +14,3 @@ Central, using the groupid `com.github.tommyettinger` and the artifactid `gabber
 # Other
 Gabber is the Dutch equivalent of the English word "jabber," meaning to speak meaninglessly, but is also a genre of
 fast, chaotic electronic music that I happened to be listening to at the time I created the repo.
-
