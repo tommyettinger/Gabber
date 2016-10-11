@@ -6,10 +6,16 @@ language-related tasks, and does not take on any of SquidLib's other roles. It i
 including to Android and GWT as well as desktop applications. It has one dependency (that also works cross-platform),
 RegExodus, which provides expanded regular expression support.
 
-The code is currently in the process of being brought in from SquidLib and altered to need fewer support classes.
-In the `gabber` package, `Language` is the main piece of code, and it should be complete for now. The code for
-translating reversibly is coming soon. When the main body of code is done, the plan is to publish Gabber to Maven
-Central, using the groupid `com.github.tommyettinger` and the artifactid `gabber`.
+The code is currently complete enough to be used for the stated purposes of the library. Documentation is present in the
+code, but could be better outside of it. Gabber version 0.1 is published to Maven Central, using the groupid
+`com.github.tommyettinger` and the artifactid `gabber`. [More instructions available here](http://search.maven.org/#artifactdetails%7Ccom.github.tommyettinger%7Cgabber%7C0.1%7Cjar).
+
+GWT, or Google Web Toolkit, probably isn't that commonly used, but this is compatible with it. To use Gabber with GWT,
+you need the GWT `inherits` tags:
+```
+     <inherits name='regexodus' />
+     <inherits name='gabber' />
+```
 
 # Other
 Gabber is the Dutch equivalent of the English word "jabber," meaning to speak meaninglessly, but is also a genre of

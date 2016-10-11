@@ -473,18 +473,19 @@ public class Language implements Serializable {
         }
         return alteredString;
     }
-    private Language register()
-    {
+
+    private Language register() {
         summary = registry.size() + "@1";
         registration = registry.size();
         registry.add(this);
         return copy();
     }
-    private Language summarize(String brief)
-    {
+
+    private Language summarize(String brief) {
         summary = brief;
         return this;
     }
+
     /**
      * Ia! Ia! Cthulhu Rl'yeh ftaghn! Useful for generating cultist ramblings or unreadable occult texts.
      * <br>
@@ -566,8 +567,7 @@ public class Language implements Serializable {
             new String[]{}, new int[]{1, 2, 3, 4}, new double[]{5, 7, 4, 1}, 0.45, 0.45, 0.0, 0.2, null, true).register();
     /**
      * Imitation ancient Greek, using the original Greek alphabet. People may try to translate it and get gibberish.
-     * Make sure the font you use to render this supports the Greek alphabet! In the GDX display module, the "smooth"
-     * fonts support all the Greek you need for this.
+     * Make sure the font you use to render this supports the Greek alphabet!
      * <br>
      * Ψυιλασ αλορ; αιπεομαρτα λε λιασπα...
      */
@@ -586,8 +586,7 @@ public class Language implements Serializable {
 
     /**
      * Imitation modern French, using (too many of) the accented vowels that are present in the language. Translating it
-     * will produce gibberish if it produces anything at all. In the GDX display module, the "smooth" and "unicode"
-     * fonts support all the accented characters you need for this.
+     * will produce gibberish if it produces anything at all.
      * <br><br>
      * Fa veau, ja ri avé re orçe jai braï aisté.
      */
@@ -647,7 +646,6 @@ public class Language implements Serializable {
     /**
      * Imitation modern Russian, using the authentic Cyrillic alphabet used in Russia and other countries.
      * Make sure the font you use to render this supports the Cyrillic alphabet!
-     * In the GDX display module, the "smooth" fonts support all the Cyrillic alphabet you need for this.
      * <br>
      * Жыдотуф руц пйцас, гогутяр шыскучэбаб - гйчапофёглор гюнуз ъсказюжин.
      */
@@ -864,9 +862,7 @@ public class Language implements Serializable {
      * Most fonts do not support the glyphs that IAST-standard romanization of Hindi needs, so this uses alternate
      * glyphs from at most Latin Extended-A. Relative to the IAST standard, the glyphs {@code "ṛṝḷḹḍṭṅṇṣṃḥ"} become
      * {@code "ŗŕļĺđţńņşĕĭ"}, with the nth glyph in the first string being substituted with the nth glyph in the second
-     * string. For some time SquidLib had a separate version of imitation Hindi, but this version is preferred over the
-     * IAST kind because font support is much better for the glyphs this version uses, so the IAST kind was removed (it
-     * added quite a bit of code for something that was mostly unusable).
+     * string.
      * <br>
      * Darvāga yar; ghađhinopŕauka āĕrdur, conśaigaijo śabhodhaĕđū jiviđaudu.
      */
@@ -1245,7 +1241,7 @@ public class Language implements Serializable {
      * just sound insulting if portrayed as realistic. You may want to mix ARABIC_ROMANIZED with a very different kind
      * of language, like GREEK_ROMANIZED or RUSSIAN_AUTHENTIC, to emphasize that this is not a real-world language.
      * <br>
-     * Iramzā qāşi, qīqa banji, rūşiďīq ifateh!
+     * Ul fazuuq; rauhaudda shihlaahuu aadhiizi shiigaa iikas, uk.
      */
     public static final Language ARABIC_ROMANIZED = new Language(
             new String[]{"a", "a", "a", "a", "a", "a", "aa", "aa", "aa", "ai", "au",
@@ -1559,10 +1555,10 @@ public class Language implements Serializable {
         for (int e = 0; e < keyParts.size(); e++) {
             k = keyParts.get(e);
             v = valParts.get(e);
-            if(missingSounds.contains(k))
+            if (missingSounds.contains(k))
                 continue;
             for (String t : v.split(" ")) {
-                if(forbidden.contains(t))
+                if (forbidden.contains(t))
                     continue;
                 l = t.length();
                 int num;
@@ -1586,7 +1582,7 @@ public class Language implements Serializable {
                                 num++;
                             case 'q':
                             case 'x':
-                                num+=2;
+                                num += 2;
                                 repeat = false;
                                 break;
                             case 'i':
@@ -1599,7 +1595,7 @@ public class Language implements Serializable {
                                 num = 2;
                                 break;
                             default:
-                                if(e >= preferredLimit)
+                                if (e >= preferredLimit)
                                     num = 2;
                                 else
                                     num = 5;
@@ -1640,18 +1636,18 @@ public class Language implements Serializable {
                                     break;
                                 default:
 
-                                    if(e >= preferredLimit)
+                                    if (e >= preferredLimit)
                                         num = 2;
                                     else
                                         num = 6;
                             }
                             working.add(t);
                             for (int i = 0; i < num; i++) {
-                                    if (rng.nextDouble() < 0.3) {
-                                        working.add(t);
-                                    }
+                                if (rng.nextDouble() < 0.3) {
+                                    working.add(t);
                                 }
                             }
+                        }
                         break;
                     case 3:
                         c = t.charAt(0);
@@ -1667,7 +1663,7 @@ public class Language implements Serializable {
                                 num = 4;
                                 break;
                             default:
-                                if(e >= preferredLimit)
+                                if (e >= preferredLimit)
                                     num = 2;
                                 else
                                     num = 6;
@@ -1710,6 +1706,7 @@ public class Language implements Serializable {
      * Quetzalcoatl and the weapon atlatl), "q" with no following "u" (as in Somali and romanized Arabic, found in words
      * like suq and qat), "bh", and "dh" (as in Hindi, found in the city Bhopal and the Buddha, with these two sounds
      * grouped together so forbidding one also forbids the other).
+     *
      * @return a randomly generated language
      */
     public static Language randomLanguage() {
@@ -1727,12 +1724,14 @@ public class Language implements Serializable {
      * Quetzalcoatl and the weapon atlatl), "q" with no following "u" (as in Somali and romanized Arabic, found in words
      * like suq and qat), "bh", and "dh" (as in Hindi, found in the city Bhopal and the Buddha, with these two sounds
      * grouped together so forbidding one also forbids the other).
+     *
      * @param seed the seed, as a String (or other CharSequence), used for all random factors to generate the language
      * @return a randomly generated language
      */
     public static Language randomLanguage(final CharSequence seed) {
         return randomLanguage(Utilities.hash64(seed));
     }
+
     /**
      * Generates and returns a random language given a seed as a Long.
      * The generated language may produce words with up to 4 syllables unless requested otherwise by
@@ -1744,6 +1743,7 @@ public class Language implements Serializable {
      * Quetzalcoatl and the weapon atlatl), "q" with no following "u" (as in Somali and romanized Arabic, found in words
      * like suq and qat), "bh", and "dh" (as in Hindi, found in the city Bhopal and the Buddha, with these two sounds
      * grouped together so forbidding one also forbids the other).
+     *
      * @param seed the seed used for all random factors to generate the language
      * @return a randomly generated language
      */
@@ -1787,15 +1787,14 @@ public class Language implements Serializable {
             vals0.remove(0);
         }
         p0s = keys0.size();
-        sz0 = Math.max(rng.between(1, p0s+1), rng.between(1, p0s+1));
+        sz0 = Math.max(rng.between(1, p0s + 1), rng.between(1, p0s + 1));
         char[] nextAccents = new char[sz0], unaccented = new char[sz0];
         int vowelAccent = rng.between(1, 7);
         for (int i = 0; i < sz0; i++) {
             nextAccents[i] = accentedVowels[vOrd[i + mn]][vowelAccent];
             unaccented[i] = accentedVowels[vOrd[i + mn]][0];
         }
-        if(rng.nextDouble() < 0.8)
-        {
+        if (rng.nextDouble() < 0.8) {
             for (int i = 0; i < sz0; i++) {
                 char ac = nextAccents[i], ua = unaccented[i];
                 String v = "", uas = String.valueOf(ua);
@@ -1803,14 +1802,13 @@ public class Language implements Serializable {
                 Replacer rep = pat.replacer("$1$2$3 $1" + ac + "$3"), repLess = pat.replacer("$1" + ac + "$3");
                 for (int j = 0; j < p0s; j++) {
                     String k = keys0.get(j);
-                    if(uas.equals(k))
+                    if (uas.equals(k))
                         v = vals0.get(j);
-                    else
-                    {
+                    else {
                         String current = vals0.get(j);
                         String[] splits = current.split(" ");
                         for (int s = 0; s < splits.length; s++) {
-                            if(forbidden.contains(uas) && splits[s].contains(uas))
+                            if (forbidden.contains(uas) && splits[s].contains(uas))
                                 forbidden.add(splits[s].replace(ua, ac));
                         }
                         keys0.add(k);
@@ -2030,7 +2028,7 @@ public class Language implements Serializable {
     /**
      * Generate a word from this Language, using and changing the current seed.
      *
-     * @param capitalize true if the word should start with a capital letter, false otherwise
+     * @param capitalize      true if the word should start with a capital letter, false otherwise
      * @param approxSyllables the number of syllables the generated word should have, if possible
      * @return a word in the fake language as a String
      */
@@ -2041,20 +2039,21 @@ public class Language implements Serializable {
     /**
      * Generate a word from this Language using the specified RNG.
      *
-     * @param rng        the RNG to use for the randomized string building
-     * @param capitalize true if the word should start with a capital letter, false otherwise
+     * @param rng             the RNG to use for the randomized string building
+     * @param capitalize      true if the word should start with a capital letter, false otherwise
      * @param approxSyllables the number of syllables the generated word should have, if possible
      * @return a word in the fake language as a String
      */
     public String word(RNG rng, boolean capitalize, int approxSyllables) {
         return word(rng, capitalize, approxSyllables, null);
     }
+
     /**
      * Generate a word from this Language using the specified RNG.
      *
-     * @param rng        the RNG to use for the randomized string building
-     * @param capitalize true if the word should start with a capital letter, false otherwise
-     * @param approxSyllables the number of syllables the generated word should have, if possible
+     * @param rng              the RNG to use for the randomized string building
+     * @param capitalize       true if the word should start with a capital letter, false otherwise
+     * @param approxSyllables  the number of syllables the generated word should have, if possible
      * @param additionalChecks extra Patterns that match words which this should avoid generating
      * @return a word in the fake language as a String
      */
@@ -2071,10 +2070,10 @@ public class Language implements Serializable {
                 sb.append(rng.getRandomElement(openingVowels));
                 if (approxSyllables == 1 && closingConsonants.length > 0)
                     sb.append(rng.getRandomElement(closingConsonants));
-                else if(midConsonants.length > 0)
+                else if (midConsonants.length > 0)
                     sb.append(rng.getRandomElement(midConsonants));
                 i++;
-            } else if(openingConsonants.length > 0){
+            } else if (openingConsonants.length > 0) {
                 sb.append(rng.getRandomElement(openingConsonants));
             }
             String close = "";
@@ -2145,7 +2144,7 @@ public class Language implements Serializable {
             if (clean && !checkAll(sb, vulgarChecks))
                 continue;
 
-            if(additionalChecks != null && !checkAll(sb, additionalChecks))
+            if (additionalChecks != null && !checkAll(sb, additionalChecks))
                 continue;
 
             if (capitalize)
@@ -2167,6 +2166,7 @@ public class Language implements Serializable {
         return sentence(srng, minWords, maxWords, new String[]{",", ",", ",", ";"},
                 new String[]{".", ".", ".", "!", "?", "..."}, 0.2);
     }
+
     /**
      * Generate a sentence from this Language, using the given RNG.
      *
@@ -2236,7 +2236,7 @@ public class Language implements Serializable {
             sb.append(' ');
             sb.append(word(rng, false));
         }
-        if(endPunctuation != null && endPunctuation.length > 0)
+        if (endPunctuation != null && endPunctuation.length > 0)
             sb.append(rng.getRandomElement(endPunctuation));
         return sb.toString();
     }
@@ -2326,9 +2326,7 @@ public class Language implements Serializable {
             sb.append(next);
         }
 
-        if(endPunctuation != null && endPunctuation.length > 0)
-        {
-
+        if (endPunctuation != null && endPunctuation.length > 0) {
             next = rng.getRandomElement(endPunctuation);
             if (sb.length() + next.length() >= maxChars)
                 sb.append('.');
@@ -2564,17 +2562,17 @@ public class Language implements Serializable {
                 (sanityChecks == null) ? other.sanityChecks : sanityChecks, true, mods);
     }
 
-    private static double readDouble(Object o)
-    {
-        if(o instanceof Double) return (Double) o;
-        else if(o instanceof Float) return ((Float) o);
-        else if(o instanceof Long) return ((Long) o).doubleValue();
-        else if(o instanceof Integer) return ((Integer) o);
-        else if(o instanceof Short) return ((Short) o);
-        else if(o instanceof Byte) return ((Byte) o);
-        else if(o instanceof Character) return ((Character) o);
+    private static double readDouble(Object o) {
+        if (o instanceof Double) return (Double) o;
+        else if (o instanceof Float) return ((Float) o);
+        else if (o instanceof Long) return ((Long) o).doubleValue();
+        else if (o instanceof Integer) return ((Integer) o);
+        else if (o instanceof Short) return ((Short) o);
+        else if (o instanceof Byte) return ((Byte) o);
+        else if (o instanceof Character) return ((Character) o);
         return 0.0;
     }
+
     /**
      * Produces a Language by mixing this Language with one or more other Language objects. Takes
      * a weight for this, another Language, a weight for that Language, then a possibly-empty group of
@@ -2595,15 +2593,15 @@ public class Language implements Serializable {
      * technique for mixing languages by weight is so much more intuitive, but also because this assigns valid data for
      * serializing and deserializing this Language that allows it to use significantly less space (less than 1/72
      * the bytes used in one not-quite-simple test).
+     *
      * @param myWeight the weight to assign this Language in the mix
-     * @param other1 another Language to mix in; if null, this method will abort and return {@link #copy()}
-     * @param weight1 the weight to assign other1 in the mix
-     * @param pairs may be empty, not null; otherwise must alternate between Language and number (weight) elements
+     * @param other1   another Language to mix in; if null, this method will abort and return {@link #copy()}
+     * @param weight1  the weight to assign other1 in the mix
+     * @param pairs    may be empty, not null; otherwise must alternate between Language and number (weight) elements
      * @return a Language produced by mixing this with any Language arguments by the given weights
      */
-    public Language mix(double myWeight, Language other1, double weight1, Object... pairs)
-    {
-        if(other1 == null || pairs == null)
+    public Language mix(double myWeight, Language other1, double weight1, Object... pairs) {
+        if (other1 == null || pairs == null)
             return copy();
         ArrayList<Modifier> mods = new ArrayList<Modifier>(modifiers);
         Language mixer = removeModifiers();
@@ -2614,36 +2612,35 @@ public class Language implements Serializable {
         double total = 0.0, current, weight;
         languages[0] = mixer;
         total += (weights[0] = myWeight);
-        if((summaries[0] = mixer.summary) == null) summarize = false;
+        if ((summaries[0] = mixer.summary) == null) summarize = false;
         mods.addAll(other1.modifiers);
         languages[1] = other1.removeModifiers();
         total += (weights[1] = weight1);
-        if(summarize && (summaries[1] = languages[1].summary) == null) summarize = false;
-        for (int i = 1, p = 2; i < pairs.length; i+=2, p++) {
-            if(pairs[i] == null || pairs[i-1] == null)
+        if (summarize && (summaries[1] = languages[1].summary) == null) summarize = false;
+        for (int i = 1, p = 2; i < pairs.length; i += 2, p++) {
+            if (pairs[i] == null || pairs[i - 1] == null)
                 continue;
-            languages[p] = ((Language) (pairs[i-1])).removeModifiers();
+            languages[p] = ((Language) (pairs[i - 1])).removeModifiers();
             total += (weights[p] = readDouble(pairs[i]));
-            if(summarize && (summaries[p] = languages[p].summary) == null) summarize = false;
+            if (summarize && (summaries[p] = languages[p].summary) == null) summarize = false;
         }
-        if(total == 0)
+        if (total == 0)
             return copy();
         current = myWeight / total;
         for (int i = 1; i < languages.length; i++) {
-            if((weight = weights[i]) > 0)
+            if ((weight = weights[i]) > 0)
                 mixer = mixer.mix(languages[i], (weight / total) / (current += weight / total));
         }
-        if(summarize) {
+        if (summarize) {
             StringBuilder brief = new StringBuilder(64);
             String c;
             int idx;
             for (int i = 0; i < summaries.length; i++) {
                 c = summaries[i];
                 idx = c.indexOf('@');
-                if(idx >= 0)
-                {
+                if (idx >= 0) {
                     brief.append(c.substring(0, idx + 1)).append(weights[i]);
-                    if(i < summaries.length - 1)
+                    if (i < summaries.length - 1)
                         brief.append('~');
                 }
             }
@@ -2651,8 +2648,7 @@ public class Language implements Serializable {
                 brief.append('\016').append(mods.get(i).serializeToString());
             }
             return mixer.addModifiers(mods).summarize(brief.toString());
-        }
-        else
+        } else
             return mixer.addModifiers(mods);
     }
 
@@ -2670,20 +2666,20 @@ public class Language implements Serializable {
      * with 0.33 .
      * <br>
      * Not intended for external use, but it could be useful. Used internally in the deserialization code.
+     *
      * @param pairs should have at least one item, and must alternate between Language and number (weight) elements
      * @return a Language produced by mixing any Language arguments by the given weights
      */
-    public static Language mixAll(Object... pairs)
-    {
+    public static Language mixAll(Object... pairs) {
         int len;
-        if(pairs == null || (len = pairs.length) <= 0)
+        if (pairs == null || (len = pairs.length) <= 0)
             return ENGLISH.copy();
-        if(len < 4)
+        if (len < 4)
             return ((Language) (pairs[0])).copy();
         Object[] pairs2 = new Object[len - 4];
-        if(len > 4)
+        if (len > 4)
             System.arraycopy(pairs, 4, pairs2, 0, len - 4);
-        return ((Language)pairs[0]).mix(readDouble(pairs[1]), (Language)pairs[2], readDouble(pairs[3]), pairs2);
+        return ((Language) pairs[0]).mix(readDouble(pairs[1]), (Language) pairs[2], readDouble(pairs[3]), pairs2);
     }
 
     public Language addAccents(double vowelInfluence, double consonantInfluence) {
@@ -2885,46 +2881,42 @@ public class Language implements Serializable {
     }
 
 
-    public String serializeToString()
-    {
+    public String serializeToString() {
         return (summary == null) ? "" : summary;
     }
 
-    public static Language deserializeFromString(String data)
-    {
-        if(data == null || data.equals(""))
+    public static Language deserializeFromString(String data) {
+        if (data == null || data.equals(""))
             return ENGLISH.copy();
         int poundIndex = data.indexOf('#'), snailIndex = data.indexOf('@'), tempBreak = data.indexOf('\016'),
                 breakIndex = (tempBreak < 0) ? data.length() : tempBreak,
                 tildeIndex = Math.min(data.indexOf('~'), breakIndex), prevTildeIndex = -1;
-        if(tildeIndex < 0)
+        if (tildeIndex < 0)
             tildeIndex = data.length();
 
-        if(snailIndex < 0)
+        if (snailIndex < 0)
             return ENGLISH.copy();
         ArrayList<Object> pairs = new ArrayList<Object>(4);
         while (snailIndex >= 0) {
             if (poundIndex >= 0 && poundIndex < snailIndex) // random case
             {
                 pairs.add(randomLanguage(Long.parseLong(data.substring(poundIndex + 1, snailIndex))));
-                pairs.add(Double.valueOf(data.substring(snailIndex+1, tildeIndex)));
+                pairs.add(Double.valueOf(data.substring(snailIndex + 1, tildeIndex)));
                 poundIndex = -1;
+            } else {
+                pairs.add(registry.get(Integer.parseInt(data.substring(prevTildeIndex + 1, snailIndex))));
+                pairs.add(Double.valueOf(data.substring(snailIndex + 1, tildeIndex)));
             }
-            else
-            {
-                pairs.add(registry.get(Integer.parseInt(data.substring(prevTildeIndex+1, snailIndex))));
-                pairs.add(Double.valueOf(data.substring(snailIndex+1, tildeIndex)));
-            }
-            snailIndex = data.indexOf('@', snailIndex+1);
-            if(snailIndex > breakIndex)
+            snailIndex = data.indexOf('@', snailIndex + 1);
+            if (snailIndex > breakIndex)
                 break;
             prevTildeIndex = tildeIndex;
-            tildeIndex = Math.min(data.indexOf('~', tildeIndex+1), breakIndex);
-            if(tildeIndex < 0)
+            tildeIndex = Math.min(data.indexOf('~', tildeIndex + 1), breakIndex);
+            if (tildeIndex < 0)
                 tildeIndex = data.length();
         }
         ArrayList<Modifier> mods = new ArrayList<Modifier>(8);
-        if(breakIndex == tempBreak) {
+        if (breakIndex == tempBreak) {
             tildeIndex = breakIndex - 1;
             while ((prevTildeIndex = data.indexOf('\016', tildeIndex + 1)) >= 0) {
                 tildeIndex = data.indexOf('\016', prevTildeIndex + 1);
@@ -3072,25 +3064,25 @@ public class Language implements Serializable {
                     "alterations=" + Arrays.toString(alterations) +
                     '}';
         }
-        public String serializeToString()
-        {
-            if(alterations == null || alterations.length == 0) return "\6";
+
+        public String serializeToString() {
+            if (alterations == null || alterations.length == 0) return "\6";
             StringBuilder sb = new StringBuilder(32).append('\6');
             for (int i = 0; i < alterations.length; i++)
                 sb.append(alterations[i].serializeToString()).append('\6');
             return sb.toString();
         }
-        public static Modifier deserializeFromString(String data)
-        {
+
+        public static Modifier deserializeFromString(String data) {
             int currIdx = data.indexOf(6), altIdx = currIdx, matches = 0;
             while (currIdx >= 0) {
-                if((currIdx = data.indexOf(6, currIdx+1)) < 0)
+                if ((currIdx = data.indexOf(6, currIdx + 1)) < 0)
                     break;
                 matches++;
             }
             Alteration[] alts = new Alteration[matches];
             for (int i = 0; i < matches; i++) {
-                alts[i] = Alteration.deserializeFromString(data.substring(altIdx+1, (altIdx = data.indexOf(6, altIdx+1))));
+                alts[i] = Alteration.deserializeFromString(data.substring(altIdx + 1, (altIdx = data.indexOf(6, altIdx + 1))));
             }
             return new Modifier(alts);
         }
@@ -3153,13 +3145,12 @@ public class Language implements Serializable {
                     ", chance=" + chance +
                     '}';
         }
-        public String serializeToString()
-        {
+
+        public String serializeToString() {
             return replacer.getPattern().serializeToString() + '\2' + replacement + '\4' + chance;
         }
 
-        public static Alteration deserializeFromString(String data)
-        {
+        public static Alteration deserializeFromString(String data) {
             int split2 = data.indexOf('\2'), split4 = data.indexOf('\4');
             return new Alteration(Pattern.deserializeFromString(data.substring(0, split2)),
                     data.substring(split2 + 1, split4),

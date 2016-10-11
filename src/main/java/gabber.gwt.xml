@@ -2,8 +2,8 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "https://gwt.googlesource.com/gwt/+/master/./distro-source/core/src/gwt-module.dtd">
 <!-- To compile to Gwt, you need to reference this file and its one dependency in your master
      .gwt.xml file (usually called GdxDefinition.gwt.xml in libGDX applications) as follows:
-     <inherits name='gabber' />
      <inherits name='regexodus' />
+     <inherits name='gabber' />
   -->
 <module>
 	<source path="gabber" />
