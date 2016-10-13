@@ -336,63 +336,63 @@ public class Language implements Serializable {
         openConVals.add("cz dz z zv zvr zl zy zw");
 
         midConKeys.add("b");
-        midConVals.add("lb lb rb rb bl br bl br bl br lbr rbl skbr scbr zb lbh rbh bb");
+        midConVals.add("lb rb bj bl br lbr rbl skbr scbr zb bq bdh dbh bbh lbh rbh bb");
         midConKeys.add("bh");
-        midConVals.add("lbh rbh");
+        midConVals.add("bbh dbh lbh rbh");
         midConKeys.add("c");
-        midConVals.add("lc lc lsc rc rc rsc cl cr ct lcr rcl sctr scdr scbr scpr msc mscr nsc nscr ngscr ndscr cc");
+        midConVals.add("lc lsc rc rsc cl cqu cr ct lcr rcl sctr scdr scbr scpr msc mscr nsc nscr ngscr ndscr cc");
         midConKeys.add("ch");
-        midConVals.add("lch lch rch rch");
+        midConVals.add("lch rch rch");
         midConKeys.add("d");
-        midConVals.add("ld ld rd rd skdr scdr dr dr dr rdr ldr zd zdr ndr ndscr ndskr ndst ldh rdh dd");
+        midConVals.add("ld ld rd rd skdr scdr dr dr dr rdr ldr zd zdr ndr ndscr ndskr ndst dq ldh rdh dbh bdh ddh dd");
         midConKeys.add("dh");
-        midConVals.add("ldh rdh");
+        midConVals.add("bdh ddh ldh rdh");
         midConKeys.add("f");
-        midConVals.add("lf lf rf rf fl fr fl fr fl fr lfr rfl ft ff");
+        midConVals.add("lf rf fl fr fl fr fl fr lfr rfl ft ff");
         midConKeys.add("g");
-        midConVals.add("lg lg rg rg gl gr gl gr gl gr lgr rgl zg zgr ngr ngl ngscr ngskr gg");
+        midConVals.add("lg lg rg rg gl gr gl gr gl gr lgr rgl zg zgr ngr ngl ngscr ngskr gq gg");
         midConKeys.add("h");
-        midConVals.add("lch lph lth lsh rch rph rsh rth phl phr lphr rphl shl shr lshr rshl msh mshr zth ");
+        midConVals.add("lch lph lth lsh rch rph rsh rth phl phr lphr rphl shl shr lshr rshl msh mshr zth bbh dbh lbh rbh bdh ddh ldh rdh");
         midConKeys.add("j");
-        midConVals.add("lj lj rj rj");
+        midConVals.add("bj lj rj");
         midConKeys.add("k");
-        midConVals.add("lk lsk rk rsk kl kr lkr rkl sktr skdr skbr skpr zk zkr msk mskr nsk nskr ngskr ndskr kk");
+        midConVals.add("lk lsk rk rsk kl kr lkr rkl sktr skdr skbr skpr tk zk zkr msk mskr nsk nskr ngskr ndskr kq kk");
         midConKeys.add("kh");
         midConVals.add("lkh rkh");
         midConKeys.add("l");
-        midConVals.add("lb lc lch ld lf lg lj lk lm ln lp lph ls lst lt lth lsc lsk lsp lv lz lsh bl lbr rbl cl lcr rcl fl lfr rfl gl lgr rgl kl lkr rkl pl lpr rpl phl lphr rphl shl lshr rshl sl rsl lsl ldr ltr lx ngl nsl msl nsl ll");
+        midConVals.add("lb lc lch ld lf lg lj lk lm ln lp lph ls lst lt lth lsc lsk lsp lv lz lsh bl lbr rbl cl lcr rcl fl lfr rfl gl lgr rgl kl lkr rkl pl lpr rpl phl lphr rphl shl lshr rshl sl rsl lsl ldr ltr lx ngl nsl msl nsl ll lth tl ltl rtl vl");
         midConKeys.add("m");
-        midConVals.add("lm lm rm rm zm msl msc mscr msh mshr mst msp msk mskr mm");
+        midConVals.add("lm rm zm msl msc mscr msh mshr mst msp msk mskr mm");
         midConKeys.add("n");
-        midConVals.add("ln ln rn rn nx zn zn ntr ntr ndr ngr ngl nsl nsl nsc nscr ngscr ndscr nsk nskr ngskr ndskr nst ndst nsp nn");
+        midConVals.add("ln rn nx zn zn ndr nj ntr ntr ngr ngl nsl nsl nsc nscr ngscr ndscr nsk nskr ngskr ndskr nst ndst nsp nn");
         midConKeys.add("p");
-        midConVals.add("lp lsp rp rsp pl pr lpr rpl skpr scpr zp msp nsp lph rph phl phr lphr rphl pp");
+        midConVals.add("lp lsp rp rsp pl pr lpr rpl skpr scpr zp msp nsp lph rph phl phr lphr rphl pq pp");
         midConKeys.add("ph");
         midConVals.add("lph lph rph rph phl phr lphr rphl");
         midConKeys.add("q");
-        midConVals.add("");
+        midConVals.add("bq dq gq kq pq tq");
         midConKeys.add("qu");
-        midConVals.add("lqu rqu");
+        midConVals.add("cqu lqu rqu");
         midConKeys.add("r");
-        midConVals.add("rb rc rch rd rf rg rj rk rm rn rp rph rs rsh rst rt rth rsc rsk rsp rv rz br br br lbr rbl cr cr cr lcr rcl fr fr fr lfr rfl gr gr gr lgr rgl kr kr kr lkr rkl pr pr pr lpr rpl phr phr phr lphr rphl shr shr shr lshr rshl rsl sktr sctr skdr scdr skbr scbr skpr scpr dr dr dr rdr ldr tr tr tr rtr ltr rx zr zdr ztr zgr zkr ntr ntr ndr ngr mscr mshr mskr nscr ngscr ndscr nskr ngskr ndskr rr");
+        midConVals.add("rb rc rch rd rf rg rj rk rm rn rp rph rs rsh rst rt rth rsc rsk rsp rv rz br br br lbr rbl cr cr cr lcr rcl fr fr fr lfr rfl gr gr gr lgr rgl kr kr kr lkr rkl pr pr pr lpr rpl phr phr phr lphr rphl shr shr shr lshr rshl rsl sktr sctr skdr scdr skbr scbr skpr scpr dr dr dr rdr ldr tr tr tr rtr ltr vr rx zr zdr ztr zgr zkr ntr ntr ndr ngr mscr mshr mskr nscr ngscr ndscr nskr ngskr ndskr rr");
         midConKeys.add("s");
-        midConVals.add("ls lst lsc lsk lsp rs rst rsc rsk rsp sl rsl lsl sktr sctr skdr scdr skbr scbr skpr scpr nsl msl msc mscr mst msp msk mskr nsl nsc nscr ngscr ndscr nsk nskr ngskr ndskr nst ndst nsp lsh rsh sh shl shqu shk shp shm shn shr shw shpl lshr rshl msh mshr ss lth tl ltl rtl vl");
+        midConVals.add("ls lst lsc lsk lsp rs rst rsc rsk rsp sl rsl lsl sktr sctr skdr scdr skbr scbr skpr scpr nsl msl msc mscr mst msp msk mskr nsl nsc nscr ngscr ndscr nsk nskr ngskr ndskr nst ndst nsp lsh rsh sh shl shqu shk shp shm shn shr shw shpl lshr rshl msh mshr ss");
         midConKeys.add("sh");
         midConVals.add("lsh rsh sh shl shqu shk shp shm shn shr shw shpl lshr rshl msh mshr");
         midConKeys.add("t");
-        midConVals.add("ct ft lst lt rst rt sktr sctr tr rtr ltr zt ztr ntr ntr mst nst ndst ltl rtl tt");
+        midConVals.add("ct ft lst lt rst rt sktr sctr tk tr rtr ltr zt ztr ntr ntr mst nst ndst tq ltl rtl tt");
         midConKeys.add("th");
         midConVals.add("lth rth zth cth");
         midConKeys.add("tl");
         midConVals.add("ltl rtl");
         midConKeys.add("v");
-        midConVals.add("lv rv vv vl");
+        midConVals.add("lv rv vv vl vr");
         midConKeys.add("w");
-        midConVals.add("bw chw dw fw gw hw khw mw nw pw sw shw tw thw w wr zw");
+        midConVals.add("bw chw dw fw gw hw khw mw nw pw sw shw tw thw w wr wy zw");
         midConKeys.add("x");
         midConVals.add("nx rx lx");
         midConKeys.add("y");
-        midConVals.add("by dy fy gy hy ky my ny py sy ty vy y zy");
+        midConVals.add("by dy fy gy hy ky my ny py sy ty vy wy zy");
         midConKeys.add("z");
         midConVals.add("lz rz zn zd zt zg zk zm zn zp zb zr zdr ztr zgr zkr zth zz");
 
@@ -456,7 +456,6 @@ public class Language implements Serializable {
         closeConVals.add("");
         closeConKeys.add("z");
         closeConVals.add("bz cz dz fz gz kz lz mz nz pz rz tz z zz");
-
     }
 
     /**
@@ -1551,7 +1550,7 @@ public class Language implements Serializable {
                                          int preferredLimit) {
         int l, sz = keyParts.size();
         List<String> working = new ArrayList<String>(sz * 24);
-        String k, v;
+        String k, v, pair;
         for (int e = 0; e < keyParts.size(); e++) {
             k = keyParts.get(e);
             v = valParts.get(e);
@@ -1569,59 +1568,64 @@ public class Language implements Serializable {
                     case 1:
                         working.add(t);
                         working.add(t);
+                        working.add(t);
                         c = t.charAt(0);
                         num = 0;
                         boolean repeat = true;
                         switch (c) {
                             case 'w':
-                                num++;
+                                num+= 2;
                             case 'y':
                             case 'h':
-                                num++;
-                            case 'j':
-                                num++;
+                                num+= 4;
                             case 'q':
                             case 'x':
-                                num += 2;
+                                num += 4;
                                 repeat = false;
                                 break;
                             case 'i':
                             case 'u':
                                 repeat = false;
-                                num = 5;
+                                num = 13;
                                 break;
                             case 'z':
                             case 'v':
-                                num = 2;
+                                num = 4;
+                                break;
+                            case 'j':
+                                num = 7;
                                 break;
                             default:
                                 if (e >= preferredLimit)
-                                    num = 2;
+                                    num = 6;
                                 else
-                                    num = 5;
+                                    num = 13;
                         }
                         for (int i = 0; i < num * 3; i++) {
-                            if (rng.nextDouble() < 0.7) {
+                            if (rng.nextDouble() < 0.75) {
                                 working.add(t);
                             }
                         }
 
                         if (repeat && rng.nextDouble() < repeatSingleChance) {
-                            working.add(t + t);
-                            working.add(t + t);
-                            working.add(t + t);
-                            if (rng.nextDouble() < 0.8) {
-                                working.add(t + t);
-                                working.add(t + t);
+                            pair = t + t;
+                            if(missingSounds.contains(pair))
+                                continue;
+                            working.add(pair);
+                            working.add(pair);
+                            working.add(pair);
+                            if (rng.nextDouble() < 0.7) {
+                                working.add(pair);
+                                working.add(pair);
                             }
-                            if (rng.nextDouble() < 0.8) {
-                                working.add(t + t);
+                            if (rng.nextDouble() < 0.7) {
+                                working.add(pair);
                             }
                         }
 
                         break;
                     case 2:
-                        if (rng.nextDouble() < 0.75) {
+                        if (rng.nextDouble() < 0.65) {
                             c = t.charAt(1);
                             num = 0;
                             switch (c) {
@@ -1639,39 +1643,40 @@ public class Language implements Serializable {
                                     if (e >= preferredLimit)
                                         num = 2;
                                     else
-                                        num = 6;
+                                        num = 7;
                             }
                             working.add(t);
                             for (int i = 0; i < num; i++) {
-                                if (rng.nextDouble() < 0.3) {
+                                if (rng.nextDouble() < 0.25) {
                                     working.add(t);
                                 }
                             }
                         }
                         break;
                     case 3:
-                        c = t.charAt(0);
-                        num = 0;
-                        switch (c) {
-                            case 'z':
-                                num = 1;
-                                break;
-                            case 'w':
-                                num = 3;
-                                break;
-                            case 'n':
-                                num = 4;
-                                break;
-                            default:
-                                if (e >= preferredLimit)
-                                    num = 2;
-                                else
-                                    num = 6;
-                        }
-                        working.add(t);
-                        for (int i = 0; i < num; i++) {
-                            if (rng.nextDouble() < 0.2) {
-                                working.add(t);
+                        if(rng.nextDouble() < 0.5) {
+                            c = t.charAt(0);
+                            switch (c) {
+                                case 'z':
+                                    num = 1;
+                                    break;
+                                case 'w':
+                                    num = 3;
+                                    break;
+                                case 'n':
+                                    num = 4;
+                                    break;
+                                default:
+                                    if (e >= preferredLimit)
+                                        num = 2;
+                                    else
+                                        num = 6;
+                            }
+                            working.add(t);
+                            for (int i = 0; i < num; i++) {
+                                if (rng.nextDouble() < 0.2) {
+                                    working.add(t);
+                                }
                             }
                         }
                         break;
@@ -1755,9 +1760,9 @@ public class Language implements Serializable {
         System.arraycopy(new double[]{
                 5 + rng.nextDouble(4), 13 + rng.nextDouble(9), 3 + rng.nextDouble(3), 1 + rng.nextDouble(2)
         }, 0, chances, 0, chances.length);
-        double vowelHeavy = rng.between(0.2, 0.5), diversity = rng.between(0.4, 0.8);
+        double vowelHeavy = rng.between(0.2, 0.5), removalRate = rng.between(0.08, 0.37) + rng.between(0.1, 0.33);
         int sz = openConKeys.size();
-        int[] reordering = rng.randomOrdering(sz), vOrd = rng.randomOrdering(5);
+        int[] reordering = rng.randomOrdering(sz), vOrd = rng.randomOrdering(openVowelKeys.size());
         ArrayList<String>
                 keys0 = new ArrayList<String>(openVowelKeys), vals0 = new ArrayList<String>(openVowelVals),
                 keys1 = new ArrayList<String>(openConKeys), vals1 = new ArrayList<String>(openConVals),
@@ -1778,7 +1783,7 @@ public class Language implements Serializable {
 
         int n = 0;
 
-        int mn = Math.min(rng.nextInt(3), rng.nextInt(3)), sz0, p0s;
+        int mn = Math.min(Math.min(rng.nextInt(3), rng.nextInt(3)), rng.nextInt(3)), sz0, p0s;
 
         for (n = 0; n < mn; n++) {
             missingSounds.add(keys0.get(0));
@@ -1798,7 +1803,7 @@ public class Language implements Serializable {
             for (int i = 0; i < sz0; i++) {
                 char ac = nextAccents[i], ua = unaccented[i];
                 String v = "", uas = String.valueOf(ua);
-                Pattern pat = Pattern.compile("\\b([a-z]*)(" + ua + ")([a-z]*)\\b");
+                Pattern pat = Pattern.compile("\\b([aeiou]*)(" + ua + ")([aeiou]*)\\b");
                 Replacer rep = pat.replacer("$1$2$3 $1" + ac + "$3"), repLess = pat.replacer("$1" + ac + "$3");
                 for (int j = 0; j < p0s; j++) {
                     String k = keys0.get(j);
@@ -1883,7 +1888,7 @@ public class Language implements Serializable {
             n++;
         }
 
-        for (; n < sz * diversity; n++) {
+        for (; n < sz * removalRate; n++) {
             missingSounds.add(keys1.get(n));
             missingSounds.add(keys2.get(n));
             missingSounds.add(keys3.get(n));
@@ -1895,9 +1900,9 @@ public class Language implements Serializable {
         return new Language(
                 processParts(keys0, vals0, missingSounds, forbidden, rng, 0.0, p0s),
                 new String[]{"y", "y"},
-                processParts(openConKeys, openConVals, missingSounds, forbidden, rng, 0.0, 9999),
-                processParts(midConKeys, midConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 2.25, 9999),
-                processParts(closeConKeys, closeConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 3.5, 9999),
+                processParts(openConKeys, openConVals, missingSounds, forbidden, rng, 0.0, 4096),
+                processParts(midConKeys, midConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 2.25, 4096),
+                processParts(closeConKeys, closeConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 3.5, 4096),
                 new String[]{},
                 new String[]{}, lengths, chances, vowelHeavy, vowelHeavy * 1.8, 0.0, 0.0, genericSanityChecks, true).summarize("0#" + seed + "@1");
     }

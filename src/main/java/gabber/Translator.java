@@ -54,10 +54,11 @@ public class Translator implements Serializable {
             return (state += 0x41041041041041L);
         }
 
+        /*
         @Override
         public double nextDouble() {
             return Double.longBitsToDouble(0x3FFL << 52 | (state += 0x41041041041041L) >>> 12) - 1.0;
-        }
+        }*/
     }
 
     private static final long serialVersionUID = 1287835632461186341L;
