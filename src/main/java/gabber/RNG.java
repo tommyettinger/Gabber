@@ -2,6 +2,7 @@ package gabber;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class RNG implements Serializable {
 
     public RNG(long seed) {
         state = seed;
+    }
+
+    public RNG(CharSequence seed) {
+        state = Utilities.hash64(seed);
     }
 
     /**
@@ -150,7 +155,7 @@ public class RNG implements Serializable {
      * @param <T>      can be any non-primitive type.
      * @return a shuffled ArrayList containing the whole of elements in pseudo-random order.
      */
-    public <T> ArrayList<T> shuffle(List<T> elements) {
+    public <T> ArrayList<T> shuffle(Collection<T> elements) {
         ArrayList<T> al = new ArrayList<T>(elements);
         int n = al.size();
         for (int i = 0; i < n; i++) {

@@ -29,6 +29,12 @@ public class Utilities {
         return alt;
     }
 
+    public static int[] massAdd(int[] data, int toAdd)
+    {
+        for (int i = 0; i < data.length; i++) data[i] += toAdd;
+        return data;
+    }
+
     public static long hash64(final CharSequence data) {
         if (data == null)
             return 0;
@@ -38,6 +44,17 @@ public class Utilities {
         }
         return result ^ Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58));
     }
+
+    public static long hash64(final Iterable<String> data) {
+        if (data == null)
+            return 0;
+        long z = 0x632BE59BD9B4E019L, result = 1L;
+        for (String datum : data) {
+            result ^= (z += (hash64(datum) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * 0xC6BC279692B5CC83L;
+        }
+        return result ^ Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58));
+    }
+
 
     public static int hash(final CharSequence[] data) {
         if (data == null)

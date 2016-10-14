@@ -1753,16 +1753,16 @@ public class Language implements Serializable {
      * @return a randomly generated language
      */
     public static Language randomLanguage(final long seed) {
-        RNG rng = new RNG(seed);
-        int[] lengths = new int[rng.between(3, 5)];
+        srng.state = seed;
+        int[] lengths = new int[srng.between(3, 5)];
         System.arraycopy(new int[]{1, 2, 3, 4}, 0, lengths, 0, lengths.length);
         double[] chances = new double[lengths.length];
         System.arraycopy(new double[]{
-                5 + rng.nextDouble(4), 13 + rng.nextDouble(9), 3 + rng.nextDouble(3), 1 + rng.nextDouble(2)
+                5 + srng.nextDouble(4), 13 + srng.nextDouble(9), 3 + srng.nextDouble(3), 1 + srng.nextDouble(2)
         }, 0, chances, 0, chances.length);
-        double vowelHeavy = rng.between(0.2, 0.5), removalRate = rng.between(0.08, 0.37) + rng.between(0.1, 0.33);
+        double vowelHeavy = srng.between(0.2, 0.5), removalRate = srng.between(0.08, 0.37) + srng.between(0.1, 0.33);
         int sz = openConKeys.size();
-        int[] reordering = rng.randomOrdering(sz), vOrd = rng.randomOrdering(openVowelKeys.size());
+        int[] reordering = srng.randomOrdering(sz), vOrd = srng.randomOrdering(openVowelKeys.size());
         ArrayList<String>
                 keys0 = new ArrayList<String>(openVowelKeys), vals0 = new ArrayList<String>(openVowelVals),
                 keys1 = new ArrayList<String>(openConKeys), vals1 = new ArrayList<String>(openConVals),
@@ -1783,7 +1783,7 @@ public class Language implements Serializable {
 
         int n = 0;
 
-        int mn = Math.min(Math.min(rng.nextInt(3), rng.nextInt(3)), rng.nextInt(3)), sz0, p0s;
+        int mn = Math.min(Math.min(srng.nextInt(3), srng.nextInt(3)), srng.nextInt(3)), sz0, p0s;
 
         for (n = 0; n < mn; n++) {
             missingSounds.add(keys0.get(0));
@@ -1792,14 +1792,14 @@ public class Language implements Serializable {
             vals0.remove(0);
         }
         p0s = keys0.size();
-        sz0 = Math.max(rng.between(1, p0s + 1), rng.between(1, p0s + 1));
+        sz0 = Math.max(srng.between(1, p0s + 1), srng.between(1, p0s + 1));
         char[] nextAccents = new char[sz0], unaccented = new char[sz0];
-        int vowelAccent = rng.between(1, 7);
+        int vowelAccent = srng.between(1, 7);
         for (int i = 0; i < sz0; i++) {
             nextAccents[i] = accentedVowels[vOrd[i + mn]][vowelAccent];
             unaccented[i] = accentedVowels[vOrd[i + mn]][0];
         }
-        if (rng.nextDouble() < 0.8) {
+        if (srng.nextDouble() < 0.8) {
             for (int i = 0; i < sz0; i++) {
                 char ac = nextAccents[i], ua = unaccented[i];
                 String v = "", uas = String.valueOf(ua);
@@ -1826,56 +1826,56 @@ public class Language implements Serializable {
         }
 
         n = 0;
-        if (rng.nextDouble() < 0.75) {
+        if (srng.nextDouble() < 0.75) {
             missingSounds.add("z");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("z")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("z")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("z")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.82) {
+        if (srng.nextDouble() < 0.82) {
             missingSounds.add("x");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("x")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("x")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("x")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.92) {
+        if (srng.nextDouble() < 0.92) {
             missingSounds.add("qu");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("qu")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("qu")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("qu")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.96) {
+        if (srng.nextDouble() < 0.96) {
             missingSounds.add("q");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("q")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("q")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("q")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.97) {
+        if (srng.nextDouble() < 0.97) {
             missingSounds.add("tl");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("tl")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("tl")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("tl")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.86) {
+        if (srng.nextDouble() < 0.86) {
             missingSounds.add("ph");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("ph")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("ph")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("ph")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.94) {
+        if (srng.nextDouble() < 0.94) {
             missingSounds.add("kh");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("kh")).split(" "));
             Collections.addAll(forbidden, vals2.get(keys2.indexOf("kh")).split(" "));
             Collections.addAll(forbidden, vals3.get(keys3.indexOf("kh")).split(" "));
             n++;
         }
-        if (rng.nextDouble() < 0.96) {
+        if (srng.nextDouble() < 0.96) {
             missingSounds.add("bh");
             missingSounds.add("dh");
             Collections.addAll(forbidden, vals1.get(keys1.indexOf("bh")).split(" "));
@@ -1898,11 +1898,11 @@ public class Language implements Serializable {
         }
 
         return new Language(
-                processParts(keys0, vals0, missingSounds, forbidden, rng, 0.0, p0s),
+                processParts(keys0, vals0, missingSounds, forbidden, srng, 0.0, p0s),
                 new String[]{"y", "y"},
-                processParts(openConKeys, openConVals, missingSounds, forbidden, rng, 0.0, 4096),
-                processParts(midConKeys, midConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 2.25, 4096),
-                processParts(closeConKeys, closeConVals, missingSounds, forbidden, rng, (rng.nextDouble() * 3 - 0.75) / 3.5, 4096),
+                processParts(openConKeys, openConVals, missingSounds, forbidden, srng, 0.0, 4096),
+                processParts(midConKeys, midConVals, missingSounds, forbidden, srng, (srng.nextDouble() * 3 - 0.75) / 2.25, 4096),
+                processParts(closeConKeys, closeConVals, missingSounds, forbidden, srng, (srng.nextDouble() * 3 - 0.75) / 3.5, 4096),
                 new String[]{},
                 new String[]{}, lengths, chances, vowelHeavy, vowelHeavy * 1.8, 0.0, 0.0, genericSanityChecks, true).summarize("0#" + seed + "@1");
     }
@@ -1926,6 +1926,17 @@ public class Language implements Serializable {
         return word(srng, capitalize);
     }
 
+    /**
+     * Generate a word from this Language, setting the internal RNG to the given seed before generating.
+     *
+     * @param seed       a long to seed the internal pseudo-random number generator with
+     * @param capitalize true if the word should start with a capital letter, false otherwise
+     * @return a word in the fake language as a String
+     */
+    public String word(long seed, boolean capitalize) {
+        srng.state = seed;
+        return word(srng, capitalize);
+    }
     /**
      * Generate a word from this Language using the specified RNG.
      *
@@ -2054,6 +2065,31 @@ public class Language implements Serializable {
     }
 
     /**
+     * Generate a word from this Language, setting the internal RNG to the given seed before generating.
+     *
+     * @param seed            a long to seed the internal pseudo-random number generator with
+     * @param capitalize      true if the word should start with a capital letter, false otherwise
+     * @param approxSyllables the number of syllables the generated word should have, if possible
+     * @return a word in the fake language as a String
+     */
+    public String word(long seed, boolean capitalize, int approxSyllables) {
+        srng.state = seed;
+        return word(srng, capitalize, approxSyllables, null);
+    }
+    /**
+     * Generate a word from this Language, setting the internal RNG to the given seed before generating.
+     *
+     * @param seed             a long to seed the internal pseudo-random number generator with
+     * @param capitalize       true if the word should start with a capital letter, false otherwise
+     * @param approxSyllables  the number of syllables the generated word should have, if possible
+     * @param additionalChecks extra Patterns that match words which this should avoid generating
+     * @return a word in the fake language as a String
+     */
+    public String word(long seed, boolean capitalize, int approxSyllables, Pattern[] additionalChecks) {
+        srng.state = seed;
+        return word(srng, capitalize, approxSyllables, additionalChecks);
+    }
+    /**
      * Generate a word from this Language using the specified RNG.
      *
      * @param rng              the RNG to use for the randomized string building
@@ -2175,12 +2211,27 @@ public class Language implements Serializable {
     /**
      * Generate a sentence from this Language, using the given RNG.
      *
+     * @param rng the RNG to use for random choices in generating words
      * @param minWords an int for the minimum number of words in a sentence; should be at least 1
      * @param maxWords an int for the maximum number of words in a sentence; should be at least equal to minWords
      * @return a sentence in the gibberish language as a String
      */
     public String sentence(RNG rng, int minWords, int maxWords) {
         return sentence(rng, minWords, maxWords, new String[]{",", ",", ",", ";"},
+                new String[]{".", ".", ".", "!", "?", "..."}, 0.2);
+    }
+
+    /**
+     * Generate a sentence from this Language, setting the internal RNG to the given seed before generating.
+     *
+     * @param seed a long to seed the internal pseudo-random number generator with
+     * @param minWords an int for the minimum number of words in a sentence; should be at least 1
+     * @param maxWords an int for the maximum number of words in a sentence; should be at least equal to minWords
+     * @return a sentence in the gibberish language as a String
+     */
+    public String sentence(long seed, int minWords, int maxWords) {
+        srng.state = seed;
+        return sentence(srng, minWords, maxWords, new String[]{",", ",", ",", ";"},
                 new String[]{".", ".", ".", "!", "?", "..."}, 0.2);
     }
 
@@ -2202,6 +2253,25 @@ public class Language implements Serializable {
         return sentence(srng, minWords, maxWords, midPunctuation, endPunctuation, midPunctuationFrequency);
     }
 
+    /**
+     * Generate a sentence from this Language, setting the internal RNG to the given seed before generating.
+     *
+     * @param seed                    a long to seed the internal pseudo-random number generator with
+     * @param minWords                an int for the minimum number of words in a sentence; should be at least 1
+     * @param maxWords                an int for the maximum number of words in a sentence; should be at least equal to minWords
+     * @param midPunctuation          a String array where each element is a comma, semicolon, or the like that goes before a
+     *                                space in the middle of a sentence
+     * @param endPunctuation          a String array where each element is a period, question mark, or the like that goes at
+     *                                the very end of a sentence
+     * @param midPunctuationFrequency a double between 0.0 and 1.0 that determines how often Strings from
+     *                                midPunctuation should be inserted before spaces
+     * @return a sentence in the gibberish language as a String
+     */
+    public String sentence(long seed, int minWords, int maxWords, String[] midPunctuation, String[] endPunctuation,
+                           double midPunctuationFrequency) {
+        srng.state = seed;
+        return sentence(srng, minWords, maxWords, midPunctuation, endPunctuation, midPunctuationFrequency);
+    }
     /**
      * Generate a sentence from this Language using the given RNG.
      *
@@ -2265,6 +2335,28 @@ public class Language implements Serializable {
         return sentence(srng, minWords, maxWords, midPunctuation, endPunctuation, midPunctuationFrequency, maxChars);
     }
 
+
+    /**
+     * Generate a sentence from this Language that fits in the given length limit, setting the internal RNG to the given
+     * seed before generating.
+     *
+     * @param seed                    a long to seed the internal pseudo-random number generator with
+     * @param minWords                an int for the minimum number of words in a sentence; should be at least 1
+     * @param maxWords                an int for the maximum number of words in a sentence; should be at least equal to minWords
+     * @param midPunctuation          a String array where each element is a comma, semicolon, or the like that goes before a
+     *                                space in the middle of a sentence
+     * @param endPunctuation          a String array where each element is a period, question mark, or the like that goes at
+     *                                the very end of a sentence
+     * @param midPunctuationFrequency a double between 0.0 and 1.0 that determines how often Strings from
+     *                                midPunctuation should be inserted before spaces
+     * @param maxChars                the longest string length this can produce; should be at least {@code 6 * minWords}
+     * @return a sentence in the gibberish language as a String
+     */
+    public String sentence(long seed, int minWords, int maxWords, String[] midPunctuation, String[] endPunctuation,
+                           double midPunctuationFrequency, int maxChars) {
+        srng.state = seed;
+        return sentence(srng, minWords, maxWords, midPunctuation, endPunctuation, midPunctuationFrequency, maxChars);
+    }
     /**
      * Generate a sentence from this Language using the given RNG that fits in the given length limit.
      *
@@ -2535,19 +2627,19 @@ public class Language implements Serializable {
         otherInfluence = Math.max(0.0, Math.min(otherInfluence, 1.0));
         double myInfluence = 1.0 - otherInfluence;
 
-        RNG rng = new RNG((hashCode() & 0xffffffffL) | ((other.hashCode() & 0xffffffffL) << 32)
-                ^ Double.doubleToLongBits(otherInfluence));
+        srng.state = (hashCode() & 0xffffffffL) | ((other.hashCode() & 0xffffffffL) << 32)
+                ^ Double.doubleToLongBits(otherInfluence);
 
-        String[] ov = merge1000(rng, openingVowels, other.openingVowels, otherInfluence),
-                mv = merge1000(rng, midVowels, other.midVowels, otherInfluence),
-                oc = merge1000(rng, openingConsonants, other.openingConsonants, otherInfluence *
+        String[] ov = merge1000(srng, openingVowels, other.openingVowels, otherInfluence),
+                mv = merge1000(srng, midVowels, other.midVowels, otherInfluence),
+                oc = merge1000(srng, openingConsonants, other.openingConsonants, otherInfluence *
                         Math.max(0.0, Math.min(1.0, (1.0 - other.vowelStartFrequency + vowelStartFrequency)))),
-                mc = merge1000(rng, midConsonants, other.midConsonants, otherInfluence),
-                cc = merge1000(rng, closingConsonants, other.closingConsonants, otherInfluence *
+                mc = merge1000(srng, midConsonants, other.midConsonants, otherInfluence),
+                cc = merge1000(srng, closingConsonants, other.closingConsonants, otherInfluence *
                         Math.max(0.0, Math.min(1.0, (1.0 - other.vowelEndFrequency + vowelEndFrequency)))),
-                cs = merge1000(rng, closingSyllables, other.closingSyllables, otherInfluence *
+                cs = merge1000(srng, closingSyllables, other.closingSyllables, otherInfluence *
                         Math.max(0.0, Math.min(1.0, (other.syllableEndFrequency - syllableEndFrequency)))),
-                splitters = merge1000(rng, vowelSplitters, other.vowelSplitters, otherInfluence);
+                splitters = merge1000(srng, vowelSplitters, other.vowelSplitters, otherInfluence);
 
         LinkedHashMap<Integer, Double> freqs = new LinkedHashMap<Integer, Double>(syllableFrequencies);
         for (Map.Entry<Integer, Double> kv : other.syllableFrequencies.entrySet()) {
@@ -2691,14 +2783,14 @@ public class Language implements Serializable {
         vowelInfluence = Math.max(0.0, Math.min(vowelInfluence, 1.0));
         consonantInfluence = Math.max(0.0, Math.min(consonantInfluence, 1.0));
 
-        RNG rng = new RNG((hashCode() & 0xffffffffL) ^
-                ((Double.doubleToLongBits(vowelInfluence) & 0xffffffffL) | (Double.doubleToLongBits(consonantInfluence) << 32)));
-        String[] ov = accentVowels(rng, openingVowels, vowelInfluence),
-                mv = accentVowels(rng, midVowels, vowelInfluence),
-                oc = accentConsonants(rng, openingConsonants, consonantInfluence),
-                mc = accentConsonants(rng, midConsonants, consonantInfluence),
-                cc = accentConsonants(rng, closingConsonants, consonantInfluence),
-                cs = accentBoth(rng, closingSyllables, vowelInfluence, consonantInfluence);
+        srng.state = (hashCode() & 0xffffffffL) ^
+                ((Double.doubleToLongBits(vowelInfluence) & 0xffffffffL) | (Double.doubleToLongBits(consonantInfluence) << 32));
+        String[] ov = accentVowels(srng, openingVowels, vowelInfluence),
+                mv = accentVowels(srng, midVowels, vowelInfluence),
+                oc = accentConsonants(srng, openingConsonants, consonantInfluence),
+                mc = accentConsonants(srng, midConsonants, consonantInfluence),
+                cc = accentConsonants(srng, closingConsonants, consonantInfluence),
+                cs = accentBoth(srng, closingSyllables, vowelInfluence, consonantInfluence);
 
 
         return new Language(ov, mv, oc, mc, cc, cs, vowelSplitters, syllableFrequencies,
