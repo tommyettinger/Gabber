@@ -27,7 +27,7 @@ import regexodus.*;
  * pluralization for the user or target.
  * Created by Tommy Ettinger on 10/31/2016.
  */
-public class Phrasing {
+public class Messaging {
 
     /**
      * Properties of nouns needed to correctly conjugate those nouns and refer to them with pronouns, such as genders.
@@ -99,7 +99,7 @@ public class Phrasing {
                     return "your";
                 default:
                     if(term.isEmpty()) return "";
-                    else if(term.charAt(term.length()-1) == 's') return term + '\'';
+                    else if(term.endsWith("s")) return term + '\'';
                     else return term + "'s";
             }
         }
@@ -235,6 +235,7 @@ public class Phrasing {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case GROUP:
                     return "";
                 default:
                     return "s";
@@ -249,7 +250,8 @@ public class Phrasing {
                 default:
                     return "";
             }
-        }public String ssText() {
+        }
+        public String ssText() {
             switch (this) {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_PLURAL:
@@ -259,12 +261,23 @@ public class Phrasing {
                     return "";
             }
         }
+        public String usiText() {
+            switch (this) {
+                case FIRST_PERSON_PLURAL:
+                case SECOND_PERSON_PLURAL:
+                case GROUP:
+                    return "i";
+                default:
+                    return "us";
+            }
+        }
         public String $$Text() {
             switch (this) {
                 case FIRST_PERSON_SINGULAR:
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case GROUP:
                     return "";
                 default:
                     return "es";
@@ -276,6 +289,7 @@ public class Phrasing {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case GROUP:
                     return "y";
                 default:
                     return "ies";
@@ -307,12 +321,12 @@ public class Phrasing {
         }
         return text;
     }
-    protected static final Pattern userPattern = Pattern.compile("({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({ss}@ss)|({s}@s)|" +
-            "({name}@name)|({Name}@Name)|({name_s}@name_s)|({Name_s}@Name_s)|({i}@i)|({I}@I)|({me}@me)|({Me}@Me)|" +
-            "({my}@my)|({My}@My)|({mine}@mine)|({Mine}@Mine)|({myself}@myself)|({Myself}@Myself)|({=name}@))"),
-            targetPattern = Pattern.compile("({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({ss}\\^ss)|({s}\\^s)|" +
-                    "({name}\\^name)|({Name}\\^Name)|({name_s}\\^name_s)|({Name_s}\\^Name_s)|({i}\\^i)|({I}\\^I)|({me}\\^me)|({Me}\\^Me)|" +
-                    "({my}\\^my)|({My}\\^My)|({mine}\\^mine)|({Mine}\\^Mine)|({myself}\\^myself)|({Myself}\\^Myself)|({=name}\\^))");
+    protected static final Pattern userPattern = Pattern.compile("({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({ss}@ss)|({s}@s)|({usi}@usi)|" +
+            "({name_s}@name_s)|({Name_s}@Name_s)|({name}@name)|({Name}@Name)|({i}@i)|({I}@I)|({me}@me)|({Me}@Me)|" +
+            "({myself}@myself)|({Myself}@Myself)|({my}@my)|({My}@My)|({mine}@mine)|({Mine}@Mine)|({=name}@)"),
+            targetPattern = Pattern.compile("({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({ss}\\^ss)|({s}\\^s)|({usi}\\^usi)|" +
+                    "({name_s}\\^name_s)|({Name_s}\\^Name_s)|({name}\\^name)|({Name}\\^Name)|({i}\\^i)|({I}\\^I)|({me}\\^me)|({Me}\\^Me)|" +
+                    "({myself}\\^myself)|({Myself}\\^Myself)|({my}\\^my)|({My}\\^My)|({mine}\\^mine)|({Mine}\\^Mine)|({=name}\\^)");
     protected static class BeingSubstitution implements Substitution {
 
         public String term;
@@ -400,6 +414,10 @@ public class Phrasing {
             else if(match.isCaptured("ss"))
             {
                 dest.append(trait.ssText());
+            }
+            else if(match.isCaptured("usi"))
+            {
+                dest.append(trait.usiText());
             }
             else if(match.isCaptured("$"))
             {
