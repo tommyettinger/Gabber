@@ -2,6 +2,8 @@ package gabber;
 
 import regexodus.*;
 
+import java.util.LinkedHashMap;
+
 /**
  * Helps handle formation of messages from a template, using correct pronouns and helping handle various idiosyncrasies
  * in English-language text. You call the static method
@@ -271,6 +273,16 @@ public class Messaging {
                     return "us";
             }
         }
+        public String fvesText() {
+            switch (this) {
+                case FIRST_PERSON_PLURAL:
+                case SECOND_PERSON_PLURAL:
+                case GROUP:
+                    return "ves";
+                default:
+                    return "f";
+            }
+        }
         public String $$Text() {
             switch (this) {
                 case FIRST_PERSON_SINGULAR:
@@ -296,6 +308,8 @@ public class Messaging {
             }
         }
     }
+
+
     public static String transform(CharSequence message, String user, NounTrait userTrait)
     {
         Replacer ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait));
@@ -321,12 +335,34 @@ public class Messaging {
         }
         return text;
     }
-    protected static final Pattern userPattern = Pattern.compile("({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({ss}@ss)|({s}@s)|({usi}@usi)|" +
+    protected static final Pattern userPattern = Pattern.compile("({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({ss}@ss)|({s}@s)|({usi}@usi)|({fves}@fves)|" +
             "({name_s}@name_s)|({Name_s}@Name_s)|({name}@name)|({Name}@Name)|({i}@i)|({I}@I)|({me}@me)|({Me}@Me)|" +
-            "({myself}@myself)|({Myself}@Myself)|({my}@my)|({My}@My)|({mine}@mine)|({Mine}@Mine)|({=name}@)"),
-            targetPattern = Pattern.compile("({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({ss}\\^ss)|({s}\\^s)|({usi}\\^usi)|" +
+            "({myself}@myself)|({Myself}@Myself)|({my}@my)|({My}@My)|({mine}@mine)|({Mine}@Mine)|" +
+            "(?:@({Other}\\p{Lu}\\w*))|(?:@({other}\\p{Ll}\\w*))|({=name}@)"),
+            targetPattern = Pattern.compile("({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({ss}\\^ss)|({s}\\^s)|({usi}\\^usi)|({fves}\\^fves)|" +
                     "({name_s}\\^name_s)|({Name_s}\\^Name_s)|({name}\\^name)|({Name}\\^Name)|({i}\\^i)|({I}\\^I)|({me}\\^me)|({Me}\\^Me)|" +
-                    "({myself}\\^myself)|({Myself}\\^Myself)|({my}\\^my)|({My}\\^My)|({mine}\\^mine)|({Mine}\\^Mine)|({=name}\\^)");
+                    "({myself}\\^myself)|({Myself}\\^Myself)|({my}\\^my)|({My}\\^My)|({mine}\\^mine)|({Mine}\\^Mine)|" +
+                    "(?:\\^({Other}\\p{Lu}\\w*))|(?:\\^({other}\\p{Ll}\\w*))|({=name}\\^)");
+
+    private static final LinkedHashMap<String, String[]> irregular = new LinkedHashMap<String, String[]>(64);
+
+    public static void learnIrregularWord(String word, String firstPersonSingular, String firstPersonPlural,
+                                          String secondPersonSingular, String secondPersonPlural,
+                                          String thirdPersonSingular, String thirdPersonPlural)
+    {
+        irregular.put(word, new String[]{firstPersonSingular, firstPersonPlural, secondPersonSingular, secondPersonPlural,
+                thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular,
+                thirdPersonPlural});
+    }
+
+    static {
+        learnIrregularWord("is", "am", "are", "are", "are", "is", "are");
+        learnIrregularWord("have", "have", "have", "have", "have", "has", "have");
+        learnIrregularWord("haven_t", "haven't", "haven't", "haven't", "haven't", "hasn't", "haven't");
+        learnIrregularWord("do", "do", "do", "do", "do", "does", "do");
+        learnIrregularWord("don_t", "don't", "don't", "don't", "don't", "doesn't", "don't");
+    }
+
     protected static class BeingSubstitution implements Substitution {
 
         public String term;
@@ -340,7 +376,7 @@ public class Messaging {
 
         public BeingSubstitution(String term, NounTrait trait)
         {
-            this.term = (term == null) ? "" : term;
+            this.term = (term == null) ? "Nullberoth of the North" : term;
             this.trait = (trait == null) ? NounTrait.UNSPECIFIED_GENDER : trait;
         }
         public static void appendCapitalized(String s, TextBuffer dest)
@@ -430,6 +466,22 @@ public class Messaging {
             else if(match.isCaptured("$$$"))
             {
                 dest.append(trait.$$$Text());
+            }
+            else if(match.isCaptured("other"))
+            {
+                String[] others = irregular.get(match.group("other"));
+                if(others != null && others.length == 11)
+                {
+                    dest.append(others[trait.ordinal()]);
+                }
+            }
+            else if(match.isCaptured("Other"))
+            {
+                String[] others = irregular.get(match.group("Other"));
+                if(others != null && others.length == 11)
+                {
+                    appendCapitalized(others[trait.ordinal()], dest);
+                }
             }
             else
                 match.getGroup(0, dest);
