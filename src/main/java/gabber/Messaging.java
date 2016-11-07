@@ -19,14 +19,23 @@ import java.util.LinkedHashMap;
  * as "@I hurr$$$ to catch up!" can be transformed to "You hurry to catch up!" or "He hurries to catch up!". The rules
  * are fairly simple; @word conjugates a specific word from a list to the correct kind for the user, while ^word does a
  * similar thing but conjugates for the target. Between 1 and 3 $ chars can be used at the end of verbs to conjugate
- * them, while @s, @ss, ^s, or ^ss can be added at the end of nouns to pluralize them if appropriate. Using one $ or s
- * will add s or nothing, as in the case of hit becoming hits, using two $ or s chars will add es or nothing, as in the
- * case of scratch becoming scratches, and using three will add ies or y, as in the case of carry becoming carries. The
- * words you can put after a @ or ^ are: name, name_s, i, me, my, mine, myself, or any of these with the first char
- * capitalized (meant for words at the start of sentences). You can also use @ or ^ on its own as an equivalent to @name
- * or ^name, can place a ^ before $, $$, or $$$ to conjugate a verb based on the target instead of the user, and can use
- * phrases like face@s, face^s, patch@ss, or patch^ss to change into face/faces or patch/patches based on the correct
- * pluralization for the user or target.
+ * them appropriately for the present tense when the verb is performed by the user (with just $) or alternately the
+ * target (if the $ chars are preceded by a ^), while @s, @ss, @sss, ^s, ^ss, or ^sss can be added at the end of nouns
+ * to pluralize them if appropriate. Using one $ or s will add s or nothing, as in the case of hit becoming hits, using
+ * two $ or s chars will add es or nothing, as in the case of scratch becoming scratches, and using three will add ies
+ * or y, as in the case of carry becoming carries. Some unusual pluralization forms are handled; @usi will turn
+ * octop@usi into octopus or octopi, and radi@usi into radius or radii, while @fves will turn el@fves into elf or elves,
+ * or dwar@fves into dwarf or dwarves.
+ * <br>
+ * The words you can put after a @ or ^ start with a small list and can
+ * be added to with {@link #learnIrregularWord(String, String, String, String, String, String, String)}. The initial
+ * list is: name, name_s, i, me, my, mine, myself, am, have, do, haven_t, don_t, or any of these with the first char
+ * capitalized (meant for words at the start of sentences). The non-word shortened terms "m" and "ve" can be used for
+ * "I'm" and "I've", respectively, as well as "you're" and "you've", plus "he's" for "he is" and "he's" for "he has".
+ * Most of these conjugate as you would expect; @me will become him, her, it, them, you, or still more forms depending
+ * on userTrait. You can also use @ or ^ on its own as an equivalent to @name or ^name, can place a ^ before $, $$, or
+ * $$$ to conjugate a verb based on the target instead of the user, and can use phrases like face@s, face^s, patch@ss,
+ * or patch^ss to change into face/faces or patch/patches based on the correct pluralization for the user or target.
  * Created by Tommy Ettinger on 10/31/2016.
  */
 public class Messaging {
@@ -231,18 +240,6 @@ public class Messaging {
             }
         }
 
-        public String $Text() {
-            switch (this) {
-                case FIRST_PERSON_SINGULAR:
-                case FIRST_PERSON_PLURAL:
-                case SECOND_PERSON_SINGULAR:
-                case SECOND_PERSON_PLURAL:
-                case GROUP:
-                    return "";
-                default:
-                    return "s";
-            }
-        }
         public String sText() {
             switch (this) {
                 case FIRST_PERSON_PLURAL:
@@ -263,6 +260,16 @@ public class Messaging {
                     return "";
             }
         }
+        public String sssText() {
+            switch (this) {
+                case FIRST_PERSON_PLURAL:
+                case SECOND_PERSON_PLURAL:
+                case GROUP:
+                    return "ies";
+                default:
+                    return "y";
+            }
+        }
         public String usiText() {
             switch (this) {
                 case FIRST_PERSON_PLURAL:
@@ -281,6 +288,19 @@ public class Messaging {
                     return "ves";
                 default:
                     return "f";
+            }
+        }
+
+        public String $Text() {
+            switch (this) {
+                case FIRST_PERSON_SINGULAR:
+                case FIRST_PERSON_PLURAL:
+                case SECOND_PERSON_SINGULAR:
+                case SECOND_PERSON_PLURAL:
+                case GROUP:
+                    return "";
+                default:
+                    return "s";
             }
         }
         public String $$Text() {
@@ -310,42 +330,88 @@ public class Messaging {
     }
 
 
+    /**
+     * Takes message and replaces any of the special terms this recognizes, like @, ^, and $, with the appropriately-
+     * conjugated terms for the given user and their associated NounTrait.
+     * @param message the message to transform; should contain "@" or "$" in it, at least, to be replaced
+     * @param user the name of the user for cases where it can replace text like "@" or "@Name"
+     * @param userTrait the {@link NounTrait} enum that determines how user should be referred to
+     * @return a String resulting from the processing of message
+     */
     public static String transform(CharSequence message, String user, NounTrait userTrait)
     {
-        Replacer ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait));
+        Replacer ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait, true));
         return ur.replace(message);
     }
 
+    /**
+     * Takes message and replaces any of the special terms this recognizes, like @, ^, and $, with the appropriately-
+     * conjugated terms for the given user, their associated NounTrait, the given target, and their NounTrait.
+     * @param message the message to transform; should contain "@", "^", or "$" in it, at least, to be replaced
+     * @param user the name of the user for cases where it can replace text like "@" or "@Name"
+     * @param userTrait the {@link NounTrait} enum that determines how user should be referred to
+     * @param target the name of the target for cases where it can replace text like "^" or "^Name"
+     * @param targetTrait the {@link NounTrait} enum that determines how the target should be referred to
+     * @return a String resulting from the processing of message
+     */
     public static String transform(CharSequence message, String user, NounTrait userTrait, String target, NounTrait targetTrait)
     {
-        Replacer tr = new Replacer(targetPattern, new BeingSubstitution(target, targetTrait)),
-                ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait));
+        Replacer tr = new Replacer(targetPattern, new BeingSubstitution(target, targetTrait, false)),
+                ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait, true));
         return ur.replace(tr.replace(message));
     }
+
+    /**
+     * Takes message and replaces any of the special terms this recognizes, like @, ^, and $, with the appropriately-
+     * conjugated terms for the given user, their associated NounTrait, the given target, and their NounTrait. Also
+     * replaces each occurrence of "~" with
+     * @param message the message to transform; should contain "@", "^", or "$" in it, at least, to be replaced
+     * @param user the name of the user for cases where it can replace text like "@" or "@Name"
+     * @param userTrait the {@link NounTrait} enum that determines how user should be referred to
+     * @param target the name of the target for cases where it can replace text like "^" or "^Name"
+     * @param targetTrait the {@link NounTrait} enum that determines how the target should be referred to
+     * @return a String resulting from the processing of message
+     */
     public static String transform(CharSequence message, String user, NounTrait userTrait, String target, NounTrait targetTrait, String... extra)
     {
-        Replacer tr = new Replacer(targetPattern, new BeingSubstitution(target, targetTrait)),
-                ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait));
+        Replacer tr = new Replacer(targetPattern, new BeingSubstitution(target, targetTrait, false)),
+                ur = new Replacer(userPattern, new BeingSubstitution(user, userTrait, true));
         String text = ur.replace(tr.replace(message));
         if(extra != null && extra.length > 0)
         {
             for (int i = 0; i < extra.length; i++) {
-                text = text.replace("~", extra[i]);
+                text = text.replaceFirst("~", extra[i]);
             }
         }
         return text;
     }
-    protected static final Pattern userPattern = Pattern.compile("({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({ss}@ss)|({s}@s)|({usi}@usi)|({fves}@fves)|" +
-            "({name_s}@name_s)|({Name_s}@Name_s)|({name}@name)|({Name}@Name)|({i}@i)|({I}@I)|({me}@me)|({Me}@Me)|" +
-            "({myself}@myself)|({Myself}@Myself)|({my}@my)|({My}@My)|({mine}@mine)|({Mine}@Mine)|" +
-            "(?:@({Other}\\p{Lu}\\w*))|(?:@({other}\\p{Ll}\\w*))|({=name}@)"),
-            targetPattern = Pattern.compile("({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({ss}\\^ss)|({s}\\^s)|({usi}\\^usi)|({fves}\\^fves)|" +
-                    "({name_s}\\^name_s)|({Name_s}\\^Name_s)|({name}\\^name)|({Name}\\^Name)|({i}\\^i)|({I}\\^I)|({me}\\^me)|({Me}\\^Me)|" +
-                    "({myself}\\^myself)|({Myself}\\^Myself)|({my}\\^my)|({My}\\^My)|({mine}\\^mine)|({Mine}\\^Mine)|" +
-                    "(?:\\^({Other}\\p{Lu}\\w*))|(?:\\^({other}\\p{Ll}\\w*))|({=name}\\^)");
+    protected static final Pattern
+            userPattern = Pattern.compile("({at_sign}\\\\@)|({caret_sign}\\\\\\^)|({dollar_sign}\\\\\\$)|({tilde_sign}\\\\~)|" +
+            "({$$$}\\$\\$\\$)|({$$}\\$\\$)|({$}\\$)|({sss}@sss\\b)|({ss}@ss\\b)|({s}@s\\b)|({usi}@usi\\b)|({fves}@fves\\b)|" +
+            "({name_s}@name_s\\b)|({Name_s}@Name_s\\b)|({name}@name\\b)|({Name}@Name\\b)|({i}@i\\b)|({I}@I\\b)|({me}@me\\b)|({Me}@Me\\b)|" +
+            "({myself}@myself\\b)|({Myself}@Myself\\b)|({my}@my\\b)|({My}@My\\b)|({mine}@mine\\b)|({Mine}@Mine\\b)|" +
+            "(?:@({Other}\\p{Lu}\\w*)\\b)|(?:@({other}\\p{Ll}\\w*)\\b)|({=name}@)"),
+            targetPattern = Pattern.compile("({at_sign}\\\\@)|({caret_sign}\\\\\\^)|({dollar_sign}\\\\\\$)|({tilde_sign}\\\\~)|" +
+                    "({$$$}\\^\\$\\$\\$)|({$$}\\^\\$\\$)|({$}\\^\\$)|({sss}\\^sss\\b)|({ss}\\^ss\\b)|({s}\\^s\\b)|({usi}\\^usi\\b)|({fves}\\^fves\\b)|" +
+                    "({name_s}\\^name_s\\b)|({Name_s}\\^Name_s\\b)|({name}\\^name\\b)|({Name}\\^Name\\b)|({i}\\^i\\b)|({I}\\^I\\b)|({me}\\^me\\b)|({Me}\\^Me\\b)|" +
+                    "({myself}\\^myself\\b)|({Myself}\\^Myself\\b)|({my}\\^my\\b)|({My}\\^My\\b)|({mine}\\^mine\\b)|({Mine}\\^Mine\\b)|" +
+                    "(?:\\^({Other}\\p{Lu}\\w*)\\b)|(?:\\^({other}\\p{Ll}\\w*)\\b)|({=name}\\^)");
 
     private static final LinkedHashMap<String, String[]> irregular = new LinkedHashMap<String, String[]>(64);
 
+    /**
+     * Adds a given {@code word}, which should start with a lower-case letter and use lower-case letters and underscores
+     * only, to the dictionary this stores. The 6 additional arguments are used for first person singular ("I am"),
+     * first person plural ("we are"), second person singular ("you are"), second person plural ("you are", the same
+     * here but not always), third person singular ("he is"), third person plural ("they are").
+     * @param word the word to learn; must start with a letter and use only lower-case letters and underscores
+     * @param firstPersonSingular the conjugated form of the word for first-person singular ("I do", "I am")
+     * @param firstPersonPlural the conjugated form of the word for first-person plural ("we do", "we are")
+     * @param secondPersonSingular
+     * @param secondPersonPlural
+     * @param thirdPersonSingular
+     * @param thirdPersonPlural
+     */
     public static void learnIrregularWord(String word, String firstPersonSingular, String firstPersonPlural,
                                           String secondPersonSingular, String secondPersonPlural,
                                           String thirdPersonSingular, String thirdPersonPlural)
@@ -356,7 +422,9 @@ public class Messaging {
     }
 
     static {
-        learnIrregularWord("is", "am", "are", "are", "are", "is", "are");
+        learnIrregularWord("m", "'m", "'re", "'re", "'re", "'s", "'re");
+        learnIrregularWord("am", "am", "are", "are", "are", "is", "are");
+        learnIrregularWord("ve", "'ve", "'ve", "'ve", "'ve", "'s", "'ve");
         learnIrregularWord("have", "have", "have", "have", "have", "has", "have");
         learnIrregularWord("haven_t", "haven't", "haven't", "haven't", "haven't", "hasn't", "haven't");
         learnIrregularWord("do", "do", "do", "do", "do", "does", "do");
@@ -367,17 +435,19 @@ public class Messaging {
 
         public String term;
         public NounTrait trait;
-
+        public boolean finisher;
         public BeingSubstitution()
         {
             term = "Joe";
             trait = NounTrait.MALE_GENDER;
+            finisher = true;
         }
 
-        public BeingSubstitution(String term, NounTrait trait)
+        public BeingSubstitution(String term, NounTrait trait, boolean finish)
         {
             this.term = (term == null) ? "Nullberoth of the North" : term;
             this.trait = (trait == null) ? NounTrait.UNSPECIFIED_GENDER : trait;
+            finisher = finish;
         }
         public static void appendCapitalized(String s, TextBuffer dest)
         {
@@ -387,7 +457,23 @@ public class Messaging {
         }
         @Override
         public void appendSubstitution(MatchResult match, TextBuffer dest) {
-            if(match.isCaptured("name"))
+            if(match.isCaptured("at_sign"))
+            {
+                dest.append(finisher ? "@" : "\\@");
+            }
+            else if(match.isCaptured("caret_sign"))
+            {
+                dest.append(finisher ? "^" : "\\^");
+            }
+            else if(match.isCaptured("dollar_sign"))
+            {
+                dest.append(finisher ? "$" : "\\$");
+            }
+            else if(match.isCaptured("tilde_sign"))
+            {
+                dest.append(finisher ? "~" : "\\~");
+            }
+            else if(match.isCaptured("name"))
             {
                 dest.append(trait.nameText(term));
             }
@@ -451,9 +537,17 @@ public class Messaging {
             {
                 dest.append(trait.ssText());
             }
+            else if(match.isCaptured("sss"))
+            {
+                dest.append(trait.sssText());
+            }
             else if(match.isCaptured("usi"))
             {
                 dest.append(trait.usiText());
+            }
+            else if(match.isCaptured("fves"))
+            {
+                dest.append(trait.fvesText());
             }
             else if(match.isCaptured("$"))
             {
@@ -477,7 +571,7 @@ public class Messaging {
             }
             else if(match.isCaptured("Other"))
             {
-                String[] others = irregular.get(match.group("Other"));
+                String[] others = irregular.get(match.group("Other").toLowerCase());
                 if(others != null && others.length == 11)
                 {
                     appendCapitalized(others[trait.ordinal()], dest);

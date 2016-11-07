@@ -5,12 +5,12 @@ import static gabber.Messaging.NounTrait.*;
 /**
  * Created by Tommy Ettinger on 11/2/2016.
  */
-public class MessagingText {
+public class MessagingTest {
     public static void main(String[] args)
     {
-        String message = "@Name hit$ ^ for ~ damage!";
-        System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblin", MALE_GENDER, "10"));
-        System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR, "10"));
+        String message = "@Name hit$ ^ for ~ ~ damage and ~ ~ damage!";
+        System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblin", MALE_GENDER, "10", "bludgeoning", "4", "lightning"));
+        System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR, "10", "poison", "3", "piercing"));
 
         message = "@Name spit$ in ^name_s face^s!";
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblin", MALE_GENDER));
@@ -18,10 +18,18 @@ public class MessagingText {
         System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
         System.out.println(Messaging.transform(message, "the goblins", GROUP, "Heero Supra", SECOND_PERSON_SINGULAR));
 
-        message = "@Name @don_t care what ^name think^$, @i will keep partying!";
+        message = "@Name @don_t care what ^name think^$, @i'll get @myself onto the dancefloor!";
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblin", MALE_GENDER));
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblins", GROUP));
         System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
         System.out.println(Messaging.transform(message, "the goblins", GROUP, "Heero Supra", SECOND_PERSON_SINGULAR));
+
+        message = "@Name@m gonna try out the escapes! \\@, \\^ \\$\\~!";
+        System.out.println(Messaging.transform(message, "Heero Supra", FIRST_PERSON_SINGULAR));
+        System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR));
+        System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
+        System.out.println(Messaging.transform(message, "the goblins", GROUP, "Heero Supra", SECOND_PERSON_SINGULAR));
+
+
     }
 }
