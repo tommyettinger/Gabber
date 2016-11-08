@@ -1,41 +1,66 @@
 package gabber;
 
 import regexodus.*;
-
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
 /**
  * Helps handle formation of messages from a template, using correct pronouns and helping handle various idiosyncrasies
  * in English-language text. You call the static method
  * {@link #transform(CharSequence, String, NounTrait, String, NounTrait)} (or one of its overloads) with a template that
  * has specific placeholder glyphs, along with a user name, optional target name, user NounTrait (an enum in this class)
- * to specify how the user should be addressed, including their gender, optional user NounTrait, and possibly more extra
- * terms that should be inserted. The placeholder glyphs are usually followed by a specific word that is conjugated for
- * the first-person case, and will have that conjugation changed to fit the NounTrait for the user or target. For
- * example, you could use "@Name hit$ ^ for ~ damage!" as a message. You could transform it with user "Heero Supra",
- * userTrait NounTrait.SECOND_PERSON_SINGULAR, target "the beast", targetTrait NounTrait.UNSPECIFIED_GENDER, and extra
- * "10" to get the message "You hit the beast for 10 damage!". You could swap the user and target (along with their
- * traits) to get the message "The beast hits you for 10 damage!" You can handle more complex verbs in some cases, such
- * as "@I hurr$$$ to catch up!" can be transformed to "You hurry to catch up!" or "He hurries to catch up!". The rules
- * are fairly simple; @word conjugates a specific word from a list to the correct kind for the user, while ^word does a
- * similar thing but conjugates for the target. Between 1 and 3 $ chars can be used at the end of verbs to conjugate
- * them appropriately for the present tense when the verb is performed by the user (with just $) or alternately the
- * target (if the $ chars are preceded by a ^), while @s, @ss, @sss, ^s, ^ss, or ^sss can be added at the end of nouns
- * to pluralize them if appropriate. Using one $ or s will add s or nothing, as in the case of hit becoming hits, using
- * two $ or s chars will add es or nothing, as in the case of scratch becoming scratches, and using three will add ies
- * or y, as in the case of carry becoming carries. Some unusual pluralization forms are handled; @usi will turn
- * octop@usi into octopus or octopi, and radi@usi into radius or radii, while @fves will turn el@fves into elf or elves,
- * or dwar@fves into dwarf or dwarves.
+ * to specify how the user should be addressed, including their gender, optional target NounTrait, and possibly extra
+ * terms that should be inserted. The placeholder glyphs are usually followed by a specific word that is conjugated in
+ * the template for the first-person case, and will be changed to fit the NounTrait for the user or target. For example,
+ * you could use "@Name hit$ ^ for ~ damage!" as a message. You could transform it with user "Heero Supra", userTrait
+ * NounTrait.SECOND_PERSON_SINGULAR, target "the beast", targetTrait NounTrait.UNSPECIFIED_GENDER, and extra "10" to get
+ * the message "You hit the beast for 10 damage!". You could swap the user and target (along with their traits) to get
+ * the message "The beast hits you for 10 damage!" You can handle more complex verbs in some cases, such as "@I hurr$$$
+ * to catch up!" can be transformed to "You hurry to catch up!" or "He hurries to catch up!". The rules are fairly
+ * simple; @word conjugates a specific word from a list to the correct kind for the user, while ^word does a similar
+ * thing but conjugates for the target. Between 1 and 3 $ chars can be used at the end of verbs to conjugate them
+ * appropriately for the present tense when the verb is performed by the user (with just $) or alternately the target
+ * (if the $ chars are preceded by a ^), while @s, @ss, @sss, ^s, ^ss, or ^sss can be added at the end of nouns to
+ * pluralize them if appropriate. Using one $ or s will add s or nothing, as in the case of hit becoming hits, using two
+ * $ or s chars will add es or nothing, as in the case of scratch becoming scratches, and using three will add ies or y,
+ * as in the case of carry becoming carries. Some unusual pluralization forms are handled; @usi will turn octop@usi into
+ * octopus or octopi, and radi@usi into radius or radii, while @fves will turn el@fves into elf or elves, or dwar@fves
+ * into dwarf or dwarves.
  * <br>
  * The words you can put after a @ or ^ start with a small list and can be added to with
  * {@link #learnIrregularWord(String, String, String, String, String, String, String)}. The initial list is: name,
  * name_s, i, me, my, mine, myself, am, have, do, haven_t, don_t, or any of these with the first char capitalized (meant
  * for words at the start of sentences). The non-word shortened terms "m" and "ve" can be used for "I'm" and "I've",
- * respectively, as well as "you're" and "you've", plus "he's" for "he is" and "he's" for "he has". Most of these
+ * respectively, as well as "you're" and "you've", plus "he's" for "he is" and "he's" for "he has". Most of the rest
  * conjugate as you would expect; @me will become him, her, it, them, you, or still more forms depending on userTrait.
- * You can also use @ or ^ on its own as an equivalent to @name or ^name, can place a ^ before $, $$, or $$$ to
- * conjugate a verb based on the target instead of the user, and can use phrases like face@s, face^s, patch@ss, or
- * patch^ss to change into face/faces or patch/patches based on the correct pluralization for the user or target.
+ * You can also use @ or ^ on its own as an equivalent to @name or ^name.
+ * <br>
+ * Examples:
+ * <br>
+ * {@code Messaging.transform("@I @am @my own boss@ss.", "unused", changingTrait)}
+ * <ul>
+ *     <li>When changingTrait is {@code NounTrait.FIRST_PERSON_SINGULAR}, this returns "I am my own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.FIRST_PERSON_PLURAL}, this returns "We are our own bosses."</li>
+ *     <li>When changingTrait is {@code NounTrait.SECOND_PERSON_SINGULAR}, this returns "You are your own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.SECOND_PERSON_PLURAL}, this returns "You are your own bosses."</li>
+ *     <li>When changingTrait is {@code NounTrait.NO_GENDER}, this returns "It is its own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.MALE_GENDER}, this returns "He is his own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.FEMALE_GENDER}, this returns "She is her own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.UNSPECIFIED_GENDER}, this returns "They are their own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.ADDITIONAL_GENDER}, this returns "Xe is xis own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.SPECIAL_CASE_GENDER}, this returns "Qvqe is qvqis own boss."</li>
+ *     <li>When changingTrait is {@code NounTrait.GROUP}, this returns "They are their own bosses."</li>
+ * </ul>
+ * {@code Messaging.transform("@Name spit$ in ^name_s face^s!", userName, userTrait, targetName, targetTrait)}
+ * <ul>
+ *     <li>When userTrait is {@code NounTrait.SECOND_PERSON_SINGULAR}, targetName is {@code "the goblin"}, and
+ *     targetTrait is {@code NounTrait.MALE_GENDER}, this returns "You spit in the goblin's face!"</li>
+ *     <li>When userName is {@code "the goblin"}, userTrait is {@code NounTrait.MALE_GENDER}, and targetTrait is
+ *     {@code NounTrait.SECOND_PERSON_SINGULAR}, this returns "The goblin spits in your face!"</li>
+ *     <li>When userTrait is {@code NounTrait.SECOND_PERSON_SINGULAR}, targetName is {@code "the goblins"}, and
+ *     targetTrait is {@code NounTrait.GROUP}, this returns "You spit in the goblins' faces!"</li>
+ *     <li>When userName is {@code "the goblins"}, userTrait is {@code NounTrait.GROUP}, and targetTrait is
+ *     {@code NounTrait.SECOND_PERSON_SINGULAR}, this returns "The goblins spit in your face!"</li>
+ * </ul>
  * Created by Tommy Ettinger on 10/31/2016.
  */
 public class Messaging {
@@ -436,7 +461,7 @@ public class Messaging {
                     "({myself}\\^myself\\b)|({Myself}\\^Myself\\b)|({my}\\^my\\b)|({My}\\^My\\b)|({mine}\\^mine\\b)|({Mine}\\^Mine\\b)|" +
                     "(?:\\^({Other}\\p{Lu}\\w*)\\b)|(?:\\^({other}\\p{Ll}\\w*)\\b)|({=name}\\^)");
 
-    private static final LinkedHashMap<String, String[]> irregular = new LinkedHashMap<String, String[]>(64);
+    private static final HashMap<String, String[]> irregular = new HashMap<String, String[]>(64);
 
     /**
      * Adds a given {@code word}, which should start with a lower-case letter and use lower-case letters and underscores

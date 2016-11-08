@@ -6,12 +6,14 @@ language-related tasks, and does not take on any of SquidLib's other roles. It i
 including to Android and GWT as well as desktop applications. It has one dependency (that also works cross-platform),
 RegExodus, which provides expanded regular expression support.
 
-The code is currently complete enough to be used for the stated purposes of the library. As of version 0.2, it also
+The code is currently complete enough to be used for the stated purposes of the library. As of version 0.3, it also
 supports generating randomized choices of synonyms using the `Thesaurus` class, which also has some handy features for
 producing strings that contain random words in some language style, or (very randomized) nation names that use the
-random languages produced by `Language`. Documentation is present in the code, but could be better outside of it. Gabber
-version 0.2 is published to Maven Central, using the groupid `com.github.tommyettinger` and the artifactid `gabber`.
-[More instructions available here](http://search.maven.org/#artifactdetails%7Ccom.github.tommyettinger%7Cgabber%7C0.2%7Cjar).
+random languages produced by `Language`. It can handle English-language text with the `Messaging` class, which allows
+messages in the style of "User verb-ed target for 99 points" to be easily constructed while handling pronouns and
+pluralization robustly and succinctly. Documentation is present in the code, but could be better outside of it. Gabber
+version 0.3 is published to Maven Central, using the groupid `com.github.tommyettinger` and the artifactid `gabber`.
+[More instructions available here](http://search.maven.org/#artifactdetails%7Ccom.github.tommyettinger%7Cgabber%7C0.3%7Cjar).
 
 GWT, or Google Web Toolkit, probably isn't that commonly used, but this is compatible with it. To use Gabber with GWT,
 you need the GWT `inherits` tags:
