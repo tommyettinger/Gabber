@@ -27,15 +27,15 @@ import java.util.LinkedHashMap;
  * octop@usi into octopus or octopi, and radi@usi into radius or radii, while @fves will turn el@fves into elf or elves,
  * or dwar@fves into dwarf or dwarves.
  * <br>
- * The words you can put after a @ or ^ start with a small list and can
- * be added to with {@link #learnIrregularWord(String, String, String, String, String, String, String)}. The initial
- * list is: name, name_s, i, me, my, mine, myself, am, have, do, haven_t, don_t, or any of these with the first char
- * capitalized (meant for words at the start of sentences). The non-word shortened terms "m" and "ve" can be used for
- * "I'm" and "I've", respectively, as well as "you're" and "you've", plus "he's" for "he is" and "he's" for "he has".
- * Most of these conjugate as you would expect; @me will become him, her, it, them, you, or still more forms depending
- * on userTrait. You can also use @ or ^ on its own as an equivalent to @name or ^name, can place a ^ before $, $$, or
- * $$$ to conjugate a verb based on the target instead of the user, and can use phrases like face@s, face^s, patch@ss,
- * or patch^ss to change into face/faces or patch/patches based on the correct pluralization for the user or target.
+ * The words you can put after a @ or ^ start with a small list and can be added to with
+ * {@link #learnIrregularWord(String, String, String, String, String, String, String)}. The initial list is: name,
+ * name_s, i, me, my, mine, myself, am, have, do, haven_t, don_t, or any of these with the first char capitalized (meant
+ * for words at the start of sentences). The non-word shortened terms "m" and "ve" can be used for "I'm" and "I've",
+ * respectively, as well as "you're" and "you've", plus "he's" for "he is" and "he's" for "he has". Most of these
+ * conjugate as you would expect; @me will become him, her, it, them, you, or still more forms depending on userTrait.
+ * You can also use @ or ^ on its own as an equivalent to @name or ^name, can place a ^ before $, $$, or $$$ to
+ * conjugate a verb based on the target instead of the user, and can use phrases like face@s, face^s, patch@ss, or
+ * patch^ss to change into face/faces or patch/patches based on the correct pluralization for the user or target.
  * Created by Tommy Ettinger on 10/31/2016.
  */
 public class Messaging {
@@ -74,16 +74,52 @@ public class Messaging {
 
      */
     public enum NounTrait {
+        /**
+         * As in, "I am my own boss." Doesn't reference gender.
+         */
         FIRST_PERSON_SINGULAR,
+        /**
+         * As in, "You are your own boss." Doesn't reference gender.
+         */
         SECOND_PERSON_SINGULAR,
+        /**
+         * As in, "We are our own bosses." Doesn't reference gender, and applies to groups.
+         */
         FIRST_PERSON_PLURAL,
+        /**
+         * As in, "You are your own bosses." Doesn't reference gender, and applies to groups.
+         */
         SECOND_PERSON_PLURAL,
+        /**
+         * Inanimate objects or beings without gender, as in "It is its own boss."
+         */
         NO_GENDER,
+        /**
+         * Male pronoun preference, as in "He is his own boss."
+         */
         MALE_GENDER,
+        /**
+         * Female pronoun preference, as in "She is her own boss."
+         */
         FEMALE_GENDER,
+        /**
+         * "Singular they" pronoun preference or to be used when preference is unknown, as in "They are their own boss."
+         */
         UNSPECIFIED_GENDER,
+        /**
+         * Third-gender pronoun preference, potentially relevant for cultures with non-binary gender terms. As in, "Xe
+         * is xis own boss."
+         */
         ADDITIONAL_GENDER,
+        /**
+         * Unpronounceable words that can be processed specially for more complex cases of pronoun preference. As in,
+         * "Qvqe is qvqis own boss."
+         */
         SPECIAL_CASE_GENDER,
+        /**
+         * Any third-person plural, as in "They are their own bosses." Not to be confused with UNSPECIFIED_GENDER, which
+         * is for singular beings, but usually uses "they" in the same way (not always).
+         */
         GROUP;
 
         public String nameText(String term) {
@@ -297,6 +333,7 @@ public class Messaging {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case UNSPECIFIED_GENDER:
                 case GROUP:
                     return "";
                 default:
@@ -309,6 +346,7 @@ public class Messaging {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case UNSPECIFIED_GENDER:
                 case GROUP:
                     return "";
                 default:
@@ -321,6 +359,7 @@ public class Messaging {
                 case FIRST_PERSON_PLURAL:
                 case SECOND_PERSON_SINGULAR:
                 case SECOND_PERSON_PLURAL:
+                case UNSPECIFIED_GENDER:
                 case GROUP:
                     return "y";
                 default:
@@ -403,21 +442,21 @@ public class Messaging {
      * Adds a given {@code word}, which should start with a lower-case letter and use lower-case letters and underscores
      * only, to the dictionary this stores. The 6 additional arguments are used for first person singular ("I am"),
      * first person plural ("we are"), second person singular ("you are"), second person plural ("you are", the same
-     * here but not always), third person singular ("he is"), third person plural ("they are").
+     * as the last one usually, but not always), third person singular ("he is"), third person plural ("they are").
      * @param word the word to learn; must start with a letter and use only lower-case letters and underscores
      * @param firstPersonSingular the conjugated form of the word for first-person singular ("I do", "I am")
      * @param firstPersonPlural the conjugated form of the word for first-person plural ("we do", "we are")
-     * @param secondPersonSingular
-     * @param secondPersonPlural
-     * @param thirdPersonSingular
-     * @param thirdPersonPlural
+     * @param secondPersonSingular the conjugated form of the word for second-person singular ("you do", "you are")
+     * @param secondPersonPlural the conjugated form of the word for second-person plural ("you do", "you are")
+     * @param thirdPersonSingular the conjugated form of the word for third-person singular ("he does", "he is")
+     * @param thirdPersonPlural the conjugated form of the word for third-person plural and unspecified-gender singular ("they do", "they are")
      */
     public static void learnIrregularWord(String word, String firstPersonSingular, String firstPersonPlural,
                                           String secondPersonSingular, String secondPersonPlural,
                                           String thirdPersonSingular, String thirdPersonPlural)
     {
         irregular.put(word, new String[]{firstPersonSingular, firstPersonPlural, secondPersonSingular, secondPersonPlural,
-                thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonSingular,
+                thirdPersonSingular, thirdPersonSingular, thirdPersonSingular, thirdPersonPlural, thirdPersonSingular, thirdPersonSingular,
                 thirdPersonPlural});
     }
 

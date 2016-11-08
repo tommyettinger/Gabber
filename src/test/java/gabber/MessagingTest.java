@@ -18,7 +18,7 @@ public class MessagingTest {
         System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
         System.out.println(Messaging.transform(message, "the goblins", GROUP, "Heero Supra", SECOND_PERSON_SINGULAR));
 
-        message = "@Name @don_t care what ^name think^$, @i'll get @myself onto the dancefloor!";
+        message = "@Name @don_t care what ^name think^$, @i'll get @myself onto that dancefloor!";
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblin", MALE_GENDER));
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR, "the goblins", GROUP));
         System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
@@ -29,6 +29,19 @@ public class MessagingTest {
         System.out.println(Messaging.transform(message, "Heero Supra", SECOND_PERSON_SINGULAR));
         System.out.println(Messaging.transform(message, "the goblin", MALE_GENDER, "Heero Supra", SECOND_PERSON_SINGULAR));
         System.out.println(Messaging.transform(message, "the goblins", GROUP, "Heero Supra", SECOND_PERSON_SINGULAR));
+
+        message = "@I @am @my own boss@ss.";
+        System.out.println(Messaging.transform(message, "Captain Spectacular", FIRST_PERSON_SINGULAR));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", FIRST_PERSON_PLURAL));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", SECOND_PERSON_SINGULAR));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", SECOND_PERSON_PLURAL));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", NO_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", MALE_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", FEMALE_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", UNSPECIFIED_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", ADDITIONAL_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", SPECIAL_CASE_GENDER));
+        System.out.println(Messaging.transform(message, "Captain Spectacular", GROUP));
 
 
     }
