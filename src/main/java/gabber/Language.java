@@ -1279,45 +1279,78 @@ public class Language implements Serializable {
                     "iit", "akhmen", "akhmed", "ani", "abiib", "iib", "uuni", "iiz", "aqarii", "adiiq",
             },
             new String[]{}, new int[]{1, 2, 3, 4}, new double[]{6, 5, 5, 1}, 0.55, 0.65, 0.0, 0.15, arabicSanityChecks, true).register();
-    /*
-    public static final Language ARABIC_ROMANIZED = new Language(
-            new String[]{"a", "a", "a", "a", "a", "a", "ā", "ā", "ā", "ai", "au",
-                    "a", "i", "u", "a", "i", "u",
-                    "i", "i", "i", "i", "i", "ī", "ī", "ī",
-                    "u", "u", "u", "ū", "ū",
-            },
+    /**
+     * Imitation text from an approximation of one of the Inuktitut languages spoken by various people of the Arctic and
+     * nearby areas. This is likely to be hard to pronounce. Inuktitut is the name accepted in Canada for one language
+     * family of that area, but other parts of the Arctic circle speak languages with varying levels of difference from
+     * this style of generated text. The term "Inuit language" may be acceptable, but "Eskimo language" is probably not,
+     * and when that term is not considered outright offensive it refers to a different language group anyway (more
+     * properly called Yupik or Yup'ik, and primarily spoken in Siberia instead of Canada and Alaska).
+     * <br>
+     * Ugkangungait ninaaq ipkutuilluuq um aitqiinnaitunniak tillingaat.
+     */
+    public static final Language INUKTITUT = new Language(
+            new String[]{"a", "a", "a", "a", "a", "aa", "aa", "aa", "aa", "i", "i", "i", "ii", "ii", "u", "u", "u", "uu", "uu", "ai", "ia", "iu", "ua", "ui"},
             new String[]{},
-            new String[]{"δ", "b", "t", "ţ", "j", "ĥ", "ħ", "d", "đ", "r", "z", "s", "š", "ş", "ď", "ť",
-                    "ż", "ξ", "g", "f", "q", "k", "l", "m", "n", "h", "w",
-                    "q", "k", "q", "k", "b", "d", "f", "l", "z", "ż", "h", "h", "ĥ", "j", "s", "š", "ş", "r",
-                    "q", "k", "q", "k", "f", "l", "z", "h", "h", "j", "s", "r",
-                    "q", "k", "f", "l", "z", "h", "h", "j", "s", "r",
-                    "al-", "al-", "ibn-",
+            new String[]{"p", "t", "k", "q", "s", "l", "h", "v", "j", "g", "r", "m", "n",
+                    "t", "t", "t", "t", "k", "k", "q", "q", "n", "n", "n", "n", "g", "l"},
+            new String[]{"pp", "tt", "kk", "pk", "tk", "gk", "kp", "kt", "kg", "pq", "tq", "gq", "ss", "ll", "rr", "mm",
+                    "nn", "nng", "ng", "ng",
+                    "ll", "nn", "nn", "nn",},
+            new String[]{"n", "t", "q", "k", "n", "t", "q", "k", "n", "t", "q", "k", "n", "t", "q", "k", "p", "s", "m", "g", "g", "ng", "ng", "ng"},
+            new String[]{"itut", "uit", "uq", "iuq", "iaq", "aq", "it", "aat", "aak", "aan", "ait", "ik", "uut", "un", "unnun",
+                    "ung", "ang", "ing", "iin", "iit", "iik", "in",
+                    "uq", "iaq", "aq", "ik", "it", "uit", "ut", "ut", "at", "un", "in"
             },
-            new String[]{
-                    "kk", "kk", "kk", "kk", "kk", "dd", "dd", "dd", "dd",
-                    "nj", "mj", "bj", "mj", "bj", "mj", "bj", "dj", "ďj", "đj",
-                    "nz", "nż", "mz", "mż", "rz", "rż", "bz", "dz", "tz",
-                    "s-h", "š-h", "ş-h", "tw", "bn", "fq", "hz", "hl", "ĥm",
-                    "lb", "lz", "lj", "lf", "ll", "lk", "lq", "lg", "ln"
+            new String[]{}, new int[]{1, 2, 3, 4, 5}, new double[]{3, 4, 6, 5, 4}, 0.45, 0.0, 0.0, 0.25, null, true).register();
+    /**
+     * Somewhat close to Old Norse, which is itself very close to Icelandic, so this uses Icelandic spelling rules. Not
+     * to be confused with the language(s) of Norway, where the Norwegian languages are called norsk, and are further
+     * distinguished into Bokmål and Nynorsk. This should not be likely to seem like any form of Norwegian, since it
+     * doesn't have the a-with-ring letter 'å' and has the letters eth ('Ðð') and thorn (Þþ).
+     * <br>
+     * Leyrk tjör stomri kna snó æd ðrépdápá, prygso?
+     */
+    public static final Language NORSE = new Language(
+            new String[]{"a","a","a","á","á","au","e","e","e","é","é","ei","ey","i","i","í","í","y","y","ý","ý",
+                    "o","o","o","ó","ó","u","u","u","ú","ú","æ","æ","æ","ö","ö",},
+            new String[]{},
+            new String[]{"b","bl","br","bj","d","dr","dj","ð","ðl","ðr","f","fl","flj","fr","fn","fj","g","gn","gj","h",
+                    "hj","hl","hr","hv","j","k","kl","kr","kn","kj","l","lj","m","mj","n","nj","p","pl","pr","pj","r",
+                    "rj","s","sj","sl","sn","sp","st","sþ","sð","t","tj","v","vl","vr","vj","þ","þl","þr",
+
+                    "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
+                    "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
+                    "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
             },
-            new String[]{
-                    "δ", "b", "t", "ţ", "j", "ĥ", "ħ", "d", "đ", "r", "z", "s", "š", "ş", "ď", "ť",
-                    "ż", "ξ", "g", "f", "q", "k", "l", "m", "n", "h", "w",
-                    "k", "q", "k", "b", "d", "f", "l", "z", "ż", "h", "h", "ĥ", "j", "s", "š", "ş", "r",
-                    "k", "q", "k", "f", "l", "z", "h", "h", "j", "s", "r",
-                    "k", "f", "l", "z", "h", "h", "j", "s", "r",
-                    "b", "t", "ţ", "j", "ĥ", "ħ", "d", "đ", "r", "z", "s", "š", "ş", "ď", "ť",
-                    "ż", "g", "f", "q", "k", "l", "m", "n", "h", "w",
-                    "k", "q", "k", "b", "d", "f", "l", "z", "ż", "h", "h", "ĥ", "j", "s", "š", "ş", "r",
-                    "k", "q", "k", "f", "l", "z", "h", "h", "j", "s", "r",
-                    "k", "f", "l", "z", "h", "h", "j", "s", "r",
+            new String[]{"bd","bf","bg","bk","bl","bp","br","bt","bv","bm","bn","bð","bj",
+                    "db","df","dg","dk","dl","dp","dr","dt","dv","dm","dn","dð","dþ","dj","ndk","ndb","ndg","ndl","nds","nds",
+                    "ðl","ðr","ðk","ðj","ðg","ðd","ðb","ðp","ðs",
+                    "fb","fd","fg","fk","fl","fp","fr","fs","ft","fv","fm","fn","fð","fj",
+                    "gb","gd","gf","gk","gl","gp","gr","gt","gv","gm","gn","gð","gj",
+                    "h","hj","hl","hr","hv",
+                    "kb","kd","kf","kp","kv","km","kn","kð","kl","kr","nkj","nkr","nkl",
+                    "lbr","ldr","lfr","lg","lgr","lj","lkr","ln","ls","ltr","lv","lð","lðr","lþ",
+                    "mb","md","mk","mg","ml","mp","mr","ms","mt","mv","mð","mþ","mj",
+                    "nb","nl","np","nr","nv","nð","nþ","nj",
+                    "ngl","ngb","ngd","ngk","ngp","ngt","ngv","ngm","ngð","ngþ","ngr",
+                    "mbd","mbg","mbs","mbt","ldg","ldn","ldk","lds","rðn","rðl","gðs","gðr",
+                    "pb","pd","pg","pk","pl","pr","ps","psj","pð","pj",
+                    "rl","rbr","rdr","rg","rgr","rkr","rpr","rs","rts","rtr","rv","rj",
+                    "sb","sbr","sd","sdr","sf","sfj","sg","skr","skl","sm","sn","str","sv","sð","sþ","sj",
+                    "tr","tn","tb","td","tg","tv","tf","tj","tk","tm","tp",},
+            new String[]{"kk","ll","nn","pp","tt","kk","ll","nn","pp","tt",
+                    "bs","ds","gs","x","rn","gn","gt","gs","ks","kt","nt","nd","nk","nt","ng","ngs","ns",
+                    "ps","pk","pt","pts","lb","ld","lf","lk","lm","lp","lps","lt",
+                    "rn","rb","rd","rk","rp","rt","rm","rð","rþ","sk","sp","st","ts",
+                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
             },
-            new String[]{"āδ", "āδ", "ari", "ari", "aīd", "ūq", "arīd", "adih", "ateh", "adeš", "amīt", "it",
-                    "īt", "aĥmen", "aĥmed", "ani", "abīb", "īb", "ūni", "īz", "aqarī", "adīq",
-            },
-            new String[]{}, new int[]{1, 2, 3, 4}, new double[]{6, 5, 5, 1}, 0.55, 0.65, 0.0, 0.15, arabicSanityChecks, true);
-            */
+            new String[]{"etta","eþa","uinn","ing","ard","eign","ef","efs","eg","ir","ir","ir","ir","ír","ír","ar","ar",
+                    "ar","ár","or","or","ór","ör","on","on","ón","onn","unn","ung","ut","ett","att","ot"},
+            new String[]{}, new int[]{1, 2, 3, 4, 5}, new double[]{5, 5, 4, 3, 1}, 0.25, 0.5, 0.0, 0.08, genericSanityChecks, true).register();
+
     /**
      * A mix of four different languages, using only ASCII characters, that is meant for generating single words for
      * creature or place names in fantasy settings.
