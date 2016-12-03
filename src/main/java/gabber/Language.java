@@ -54,8 +54,8 @@ public class Language implements Serializable {
                     Pattern.compile("[kкκcсςСQq].{1,3}[kкκcсςxхжχqmм]", 17),
                     Pattern.compile("[bъыбвβЪЫБ].{1,3}[cсς]", 17),
                     Pattern.compile("[hн][^aаαΛeезξεЗΣiτιyуλγУ][^aаαΛeезξεЗΣiτιyуλγУ]?[rяΓ]", 17),
-                    Pattern.compile("[tтτΓгcсς]..?[tтτΓг]", 17),
-                    Pattern.compile("(?:(?:[pрρ][hн])|[f])..?[rяΓ][tтτΓг]", 17),
+                    Pattern.compile("[tтτΓгcсς][iτιyуλγУ][tтτΓг]+$", 17),
+                    Pattern.compile("(?:(?:[pрρ][hн])|f)..?[rяΓ][tтτΓг]", 17),
                     Pattern.compile("[Ssξζzcсς][hн][iτιyуλγУ].?[sξζzcсς]", 17),
                     Pattern.compile("[aаαΛ][nи]..?[Ssξlιζz]", 17),
                     Pattern.compile("[aаαΛ]([sξζz]{2})", 17),
@@ -70,7 +70,6 @@ public class Language implements Serializable {
                     {
                             Pattern.compile("[AEIOUaeiou]{3}"),
                             Pattern.compile("(\\p{L})\\1\\1"),
-                            Pattern.compile("[Uu][uoj]"),
                             Pattern.compile("[Ii][iyqhl]"),
                             Pattern.compile("[Yy]([aiu])\\1"),
                             Pattern.compile("[Rr][aeiouy]+[rh]"),
@@ -79,8 +78,9 @@ public class Language implements Serializable {
                             Pattern.compile("[Hh][tcszi]?h"),
                             Pattern.compile("[Tt]t[^aeiouy]{2}"),
                             Pattern.compile("[Yy]h([^aeiouy]|$)"),
-                            Pattern.compile("([dbvcxqjky])\\1$"),
-                            Pattern.compile("[szSZrlRL][^aeiou][rlsz]"),
+                            Pattern.compile("([xqy])\\1$"),
+                            Pattern.compile("[qi]y$"),
+                            Pattern.compile("[szSZrlRL][^aeioutdfgkcpb][rlsz]"),
                             Pattern.compile("[UIuiYy][wy]"),
                             Pattern.compile("^[UIui][ae]")
                     },
@@ -1307,7 +1307,10 @@ public class Language implements Serializable {
      * Somewhat close to Old Norse, which is itself very close to Icelandic, so this uses Icelandic spelling rules. Not
      * to be confused with the language(s) of Norway, where the Norwegian languages are called norsk, and are further
      * distinguished into Bokmål and Nynorsk. This should not be likely to seem like any form of Norwegian, since it
-     * doesn't have the a-with-ring letter 'å' and has the letters eth ('Ðð') and thorn (Þþ).
+     * doesn't have the a-with-ring letter 'å' and has the letters eth ('Ðð') and thorn (Þþ). If you want to remove any
+     * letters not present on a US-ASCII keyboard, you can use {@link Modifier#SIMPLIFY_NORSE} on this language or some
+     * mix of this with other languages; it also changes some of the usage of "j" where it means the English "y" sound,
+     * making "fjord" into "fyord", which is closer to familiar uses from East Asia like "Tokyo" and "Pyongyang".
      * <br>
      * Leyrk tjör stomri kna snó æd ðrépdápá, prygso?
      */
@@ -1317,11 +1320,18 @@ public class Language implements Serializable {
             new String[]{},
             new String[]{"b","bl","br","bj","d","dr","dj","ð","ðl","ðr","f","fl","flj","fr","fn","fj","g","gn","gj","h",
                     "hj","hl","hr","hv","j","k","kl","kr","kn","kj","l","lj","m","mj","n","nj","p","pl","pr","pj","r",
-                    "rj","s","sj","sl","sn","sp","st","sþ","sð","t","tj","v","vl","vr","vj","þ","þl","þr",
+                    "rj","s","sj","sl","sn","sp","st","str","skr","skj","sþ","sð","t","tj","v","vl","vr","vj","þ","þl","þr",
 
                     "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
                     "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
                     "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
+                    "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
+                    "d","f","fl","g","gl","gr","k","h","hr","n","k","l","m","mj","n","r","s","st","t","þ","ð",
+
+                    "d","d","f","f","fl","g","g","g","gl","gr","k","h","hr","n","k","kl","l","n","r","r","s","st","t","t",
+                    "d","d","f","f","fl","g","g","g","gl","gr","k","h","hr","n","k","kl","l","n","r","r","s","st","t","t",
+                    "d","d","f","f","fl","g","g","g","gl","gr","k","h","hr","n","k","kl","l","n","r","r","s","st","t","t",
+                    "d","d","f","f","fl","g","g","g","gl","gr","k","h","hr","n","k","kl","l","n","r","r","s","st","t","t",
             },
             new String[]{"bd","bf","bg","bk","bl","bp","br","bt","bv","bm","bn","bð","bj",
                     "db","df","dg","dk","dl","dp","dr","dt","dv","dm","dn","dð","dþ","dj","ndk","ndb","ndg","ndl","nds","nds",
@@ -1343,13 +1353,41 @@ public class Language implements Serializable {
                     "bs","ds","gs","x","rn","gn","gt","gs","ks","kt","nt","nd","nk","nt","ng","ngs","ns",
                     "ps","pk","pt","pts","lb","ld","lf","lk","lm","lp","lps","lt",
                     "rn","rb","rd","rk","rp","rt","rm","rð","rþ","sk","sp","st","ts",
-                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
-                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
-                    "b","d","ð","f","g","gn","h","k","kn","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+                    "b","d","ð","f","g","gn","h","k","nk","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+                    "b","d","ð","f","g","gn","h","k","nk","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+                    "b","d","ð","f","g","gn","h","k","nk","l","m","n","ng","p","r","s","sp","st","sþ","sð","t","v","þ",
+
+                    "b","b","b","d","d","d","f","f","f","g","g","k","k","nk","l","n","ng","p","p","r","r","r","s","s","st","t","t",
+                    "b","b","b","d","d","d","f","f","f","g","g","k","k","nk","l","n","ng","p","p","r","r","r","s","s","st","t","t",
+                    "b","b","b","d","d","d","f","f","f","g","g","k","k","nk","l","n","ng","p","p","r","r","r","s","s","st","t","t",
             },
             new String[]{"etta","eþa","uinn","ing","ard","eign","ef","efs","eg","ir","ir","ir","ir","ír","ír","ar","ar",
                     "ar","ár","or","or","ór","ör","on","on","ón","onn","unn","ung","ut","ett","att","ot"},
             new String[]{}, new int[]{1, 2, 3, 4, 5}, new double[]{5, 5, 4, 3, 1}, 0.25, 0.5, 0.0, 0.08, genericSanityChecks, true).register();
+    /**
+     * Imitation text from an approximation of the language spoken by the Aztec people and also over a million
+     * contemporary people in parts of Mexico. This is may be hard to pronounce, since it uses "tl" as a normal
+     * consonant (it can start or end words), but is mostly a fairly recognizable style of language.
+     * <br>
+     * Olcoletl latl palitz ach; xatatli tzotloca amtitl, xatloatzoatl tealitozaztitli otamtax?
+     */
+    public static final Language NAHUATL = new Language(
+            new String[]{"a", "a", "a", "a", "a", "a", "a", "i", "i", "i", "i", "i", "o", "o", "o", "e", "e", "eo", "oa", "ea"},
+            new String[]{},
+            new String[]{"ch", "c", "h", "m", "l", "n", "p", "t", "tl", "tz", "x", "y", "z", "hu", "cu",
+                    "l", "l", "l", "p", "p", "t", "t", "t", "t", "t", "tl", "tl", "tz", "z", "x", "hu"},
+            new String[]{"zp", "ztl", "zc", "zt", "zl", "ct", "cl", "pl", "mt", "mc", "mch", "cz", "tc", "lc",
+                    "hu", "hu", "hu", "cu"},
+            new String[]{
+                    "ch", "c", "h", "m", "l", "n", "p", "t", "tl", "tz", "x", "y", "z",
+                    "l", "l", "l", "l", "p", "t", "t", "t", "tl", "tl", "tz", "tz", "z", "x"
+            },
+            new String[]{"otl", "eotl", "ili", "itl", "atl", "atli", "oca", "itli", "oatl", "al", "ico", "acual",
+                    "ote", "ope", "oli", "ili", "acan", "ato", "atotl", "ache", "oc", "aloc", "ax", "itziz", "iz"
+            },
+            new String[]{}, new int[]{1, 2, 3, 4, 5, 6}, new double[]{3, 4, 5, 4, 3, 1}, 0.3, 0.2, 0.0, 0.3, null, true)
+            .addModifiers(new Modifier("c([ie])", "qu$1"),
+                    new Modifier("z([ie])", "c$1")).register();
 
     /**
      * A mix of four different languages, using only ASCII characters, that is meant for generating single words for
@@ -2133,9 +2171,12 @@ public class Language implements Serializable {
      */
     public String word(RNG rng, boolean capitalize, int approxSyllables, Pattern[] additionalChecks) {
         if (approxSyllables <= 0) {
-            String finished = rng.getRandomElement(openingVowels);
-            if (capitalize) return finished.substring(0, 1).toUpperCase();
-            else return finished.substring(0, 1);
+            StringBuilder sb = new StringBuilder(rng.getRandomElement(openingVowels));
+            for (Modifier mod : modifiers) {
+                sb = mod.modify(rng, sb);
+            }
+            if (capitalize) sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+            return sb.toString();
         }
         while (true) {
             StringBuilder sb = new StringBuilder(20), ender = new StringBuilder(12);
@@ -3154,6 +3195,43 @@ public class Language implements Serializable {
         public static final Modifier NO_DOUBLES = new Modifier("(.)\\1", "$1");
 
         /**
+         * Removes accented letters and the two non-English consonants from text generated with {@link #NORSE}.
+         * Replaces á, é, í, ý, ó, æ, ú, and ö with a, e, i, y, o, ae, and ou. In some instances, replaces j
+         * with y. Replaces ð and þ with th and th, except for when preceded by s (then it replaces sð or sþ
+         * with st or st) or when the start of a word is fð or fþ, where it replaces with fr or fr.
+         */
+        public static final Modifier SIMPLIFY_NORSE = replacementTable(Utilities.makeLHM(
+                "á", "a",
+                "é", "e",
+                "í", "i",
+                "ý", "y",
+                "ó", "o",
+                "ú", "u",
+                "æ", "ae",
+                "ö", "ou",
+                "([^aeiou])jy", "$1yai",
+                "([^aeiou])j(?:[aeiouy]+)", "$1yo",
+                "s([ðþ])", "st",
+                "\\bf[ðþ]", "fr",
+                "[ðþ]", "th"));
+        //àáâãäåāăąǻæǽaèéêëēĕėęěeìíîïĩīĭįıiòóôõöøōŏőœǿoùúûüũūŭůűųuýÿŷỳy
+        /**
+         * Some changes that can be applied when sanity checks (which force re-generating a new word) aren't appropriate
+         * for fixing a word that isn't pronounceable.
+         */
+        //bcçćĉċčdþðďđḍfgĝğġģhĥħḥjĵȷkķlĺļľŀłḷḹmṃnñńņňŋṅṇpqrŕŗřṛṝsśŝşšșṣtţťțṭvwŵẁẃẅxyýÿŷỳzźżž
+        public static final Modifier GENERAL_CLEANUP = replacementTable(Utilities.makeLHM(
+                "[æǽœìíîïĩīĭįıiùúûüũūŭůűųuýÿŷỳy]([æǽœýÿŷỳy])", "$1",
+                "q([ùúûüũūŭůűųu])$", "q$1e",
+                "([ìíîïĩīĭįıi])[ìíîïĩīĭįıi]", "$1",
+                "([æǽœìíîïĩīĭįıiùúûüũūŭůűųuýÿŷỳy])[wŵẁẃẅ]$", "$1",
+                "([ùúûüũūŭůűųu])([òóôõöøōŏőǿo])", "$2$1",
+                "[àáâãäåāăąǻaèéêëēĕėęěeìíîïĩīĭįıiòóôõöøōŏőǿoùúûüũūŭůűųuýÿŷỳy]([æǽœ])", "$1",
+                "([æǽœ])[àáâãäåāăąǻaèéêëēĕėęěeìíîïĩīĭįıiòóôõöøōŏőǿoùúûüũūŭůűųuýÿŷỳy]", "$1",
+                "([wŵẁẃẅ])[wŵẁẃẅ]", "$1",
+                "qq", "q"));
+
+        /**
          * Creates a Modifier that will replace the nth char in initial with the nth char in change. Expects initial and
          * change to be the same length, but will use the lesser length if they are not equal-length. Because of the
          * state of the text at the time modifiers are run, only lower-case letters need to be searched for.
@@ -3171,7 +3249,29 @@ public class Language implements Serializable {
             }
             return new Modifier(alts);
         }
-
+        /**
+         * Creates a Modifier that will replace the nth String key in map with the nth value. Because of the
+         * state of the text at the time modifiers are run, only lower-case letters need to be searched for.
+         * This overload of replacementTable allows full regex pattern strings as keys and replacement syntax,
+         * such as searching for "([aeiou])\\1+" to find repeated occurrences of the same vowel, and "$1" in
+         * this example to replace the repeated section with only the first vowel.
+         * The ordering of map matters if a later key contains an earlier key (the earlier one will be replaced
+         * first, possibly making the later key not match), or if an earlier replacement causes a later one to
+         * become valid.
+         * @param map containing String keys to replace and String values to use instead; replacements happen in order
+         * @return a Modifier that can be added to a FakeLanguageGen with its addModifiers() method
+         */
+        public static Modifier replacementTable(LinkedHashMap<String, String> map) {
+            if (map == null)
+                return new Modifier();
+            Alteration[] alts = new Alteration[map.size()];
+            int i = 0;
+            for(Map.Entry<String, String> kv : map.entrySet())
+            {
+                alts[i++] = new Alteration(kv.getKey(), kv.getValue());
+            }
+            return new Modifier(alts);
+        }
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

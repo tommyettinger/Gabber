@@ -94,6 +94,12 @@ public class LinguisticsTest {
             System.out.println(flg.sentence(rng, 4, 9, new String[]{",", ",", ",", ";", ";"},
                     new String[]{".", ".", ".", "!", "?"}, 0.12));
         }
+        rng.setState(0xf00df00L);
+        flg = NAHUATL;
+        for (int i = 0; i < 40; i++) {
+            System.out.println(flg.sentence(rng, 4, 9, new String[]{",", ",", ",", ";", ";"},
+                    new String[]{".", ".", ".", "!", "?"}, 0.12));
+        }
 
 
         rng.setState(0xf00df00L);
@@ -155,10 +161,22 @@ public class LinguisticsTest {
                     new String[]{".", ".", "!", "?", "..."}, 0.18));
         }
         rng.setState(0xf00df00L);
-        flg = SOMALI.mix(JAPANESE_ROMANIZED, 0.3).mix(SWAHILI, 0.1);
+        flg = mixAll(SOMALI, 0.6, JAPANESE_ROMANIZED, 0.3, SWAHILI, 0.1);// SOMALI.mix(JAPANESE_ROMANIZED, 0.3).mix(SWAHILI, 0.1);
         for (int i = 0; i < 40; i++) {
             System.out.println(flg.sentence(rng, 5, 12, new String[]{",", ",", ";"},
                     new String[]{".", ".", "!", "?", "..."}, 0.15));
+        }
+        rng.setState(0xf00df00L);
+        flg = NORSE.addModifiers(Modifier.SIMPLIFY_NORSE);
+        for (int i = 0; i < 40; i++) {
+            System.out.println(flg.sentence(rng, 4, 9, new String[]{",", ",", ",", ";", ";"},
+                    new String[]{".", ".", ".", "!", "?"}, 0.12));
+        }
+        rng.setState(0xf00df00L);
+        flg = mixAll(NAHUATL, 5, INUKTITUT, 3, ARABIC_ROMANIZED, 2);
+        for (int i = 0; i < 40; i++) {
+            System.out.println(flg.sentence(rng, 4, 9, new String[]{",", ",", ",", ";", ";"},
+                    new String[]{".", ".", ".", "!", "?"}, 0.12));
         }
 
         rng.setState(0xf00df00L);
@@ -191,7 +209,7 @@ public class LinguisticsTest {
         flg = ENGLISH.addAccents(0.5, 0.15);
         System.out.println('"' + flg.sentence(rng, 6, 12, new String[]{",", ",", ",", ";"},
                 new String[]{".", ".", "!", "?", "...", "..."}, 0.17) + "\",");
-        flg = RUSSIAN_AUTHENTIC.mix(GREEK_AUTHENTIC, 0.5).mix(FRENCH, 0.35);
+        flg = mixAll(RUSSIAN_AUTHENTIC, 1, GREEK_AUTHENTIC, 1, FRENCH, 1);// RUSSIAN_AUTHENTIC.mix(GREEK_AUTHENTIC, 0.5).mix(FRENCH, 0.35);
         System.out.println('"' + flg.sentence(rng, 6, 12, new String[]{",", ",", ",", ";", " -"},
                 new String[]{".", ".", "!", "?", "...", "..."}, 0.2) + "\",");
         flg = FANCY_FANTASY_NAME;
@@ -206,83 +224,95 @@ public class LinguisticsTest {
         flg = SOMALI.mix(JAPANESE_ROMANIZED, 0.3).mix(SWAHILI, 0.15);
         System.out.println('"' + flg.sentence(rng, 4, 7, new String[]{",", ",", ";"},
                 new String[]{"!", "?", ".", ".", "."}, 0.15) + "\",");
+        flg = mixAll(NAHUATL, 5, INUKTITUT, 3, ARABIC_ROMANIZED, 2);
+        System.out.println('"' + flg.sentence(rng, 4, 6, new String[]{",", ",", ";"},
+                new String[]{"!", "?", ".", ".", "."}, 0.1) + "\",");
 
         System.out.println("\n-----------------------------------------------------------------------------");
         System.out.println();
         Language[] languages = new Language[]{
 
-                ENGLISH,
-                LOVECRAFT,
-                JAPANESE_ROMANIZED,
-                FRENCH,
-                GREEK_ROMANIZED,
-                GREEK_AUTHENTIC,
-                RUSSIAN_ROMANIZED,
-                RUSSIAN_AUTHENTIC,
-                SWAHILI,
-                SOMALI,
-                ARABIC_ROMANIZED,
-                HINDI_ROMANIZED,
-                INUKTITUT,
-                NORSE,
-                FANTASY_NAME,
-                FANCY_FANTASY_NAME,
-                mixAll(RUSSIAN_ROMANIZED, 3, SOMALI, 1),
-                mixAll(GREEK_ROMANIZED, 1, HINDI_ROMANIZED.removeAccents(), 1),
-                mixAll(SWAHILI, 7, FRENCH, 3),
-                mixAll(ARABIC_ROMANIZED, 3, JAPANESE_ROMANIZED, 2),
-                mixAll(SWAHILI, 3, GREEK_ROMANIZED, 2),
-                mixAll(GREEK_ROMANIZED, 3, SOMALI, 2),
-                mixAll(ENGLISH, 3, HINDI_ROMANIZED.removeAccents(), 2),
-                mixAll(ENGLISH, 3, JAPANESE_ROMANIZED, 2),
-                mixAll(SOMALI, 3, HINDI_ROMANIZED.removeAccents(), 2),
-                FRENCH.addModifiers(modifier("([^aeiou])\\1", "$1ph", 0.3),
-                        modifier("([^aeiou])\\1", "$1ch", 0.4),
-                        modifier("([^aeiou])\\1", "$1sh", 0.5),
-                        modifier("([^aeiou])\\1", "$1", 0.9)),
-                JAPANESE_ROMANIZED.addModifiers(Modifier.DOUBLE_VOWELS),
-                SOMALI.addModifiers(modifier("([kd])h", "$1"),
-                        modifier("([pfsgkcb])([aeiouy])", "$1l$2", 0.35),
-                        /*Language.modifier("a+", "á", 0.18),
-                        Language.modifier("e+", "é", 0.18),
-                        Language.modifier("i+", "í", 0.18),
-                        Language.modifier("o+", "ó", 0.18),
-                        Language.modifier("u+", "ú", 0.18),*/
-                        //Language.modifier("aa", "au"),
-                        modifier("ii", "ai"),
-                        modifier("uu", "ia"),
-                        modifier("([aeo])\\1", "$1"),
-                        modifier("^x", "v"),
-                        modifier("([^aeiou]|^)u([^aeiou]|$)", "$1a$2", 0.6),
-                        modifier("([aeiou])[^aeiou]([aeiou])", "$1v$2", 0.06),
-                        modifier("([aeiou])[^aeiou]([aeiou])", "$1l$2", 0.07),
-                        modifier("([aeiou])[^aeiou]([aeiou])", "$1n$2", 0.07),
-                        modifier("([aeiou])[^aeiou]([aeiou])", "$1z$2", 0.08),
-                        modifier("([^aeiou])[aeiou]+$", "$1ia", 0.35),
-                        modifier("([^aeiou])[bpdtkgj]", "$1"),
-                        modifier("[jg]$", "th"),
-                        modifier("g", "c", 0.92),
-                        modifier("([aeiou])[wy]$", "$1l", 0.6),
-                        modifier("([aeiou])[wy]$", "$1n"),
-                        modifier("[qf]$", "l", 0.4),
-                        modifier("[qf]$", "n", 0.65),
-                        modifier("[qf]$", "s"),
-                        modifier("cy", "sp"),
-                        modifier("kl", "sk"),
-                        modifier("qu+", "qui"),
-                        modifier("q([^u])", "qu$1"),
-                        modifier("cc", "ch"),
-                        modifier("[^aeiou]([^aeiou][^aeiou])", "$1"),
-                        Modifier.NO_DOUBLES
-                ),
-                mixAll(INUKTITUT, 3, ARABIC_ROMANIZED, 1, RUSSIAN_ROMANIZED, 1),
-                mixAll(NORSE, 5, ENGLISH, 3, RUSSIAN_ROMANIZED, 1),
-                mixAll(NORSE, 2, INUKTITUT, 2, SOMALI, 2),
+//                ENGLISH,
+//                LOVECRAFT,
+//                JAPANESE_ROMANIZED,
+//                FRENCH,
+//                GREEK_ROMANIZED,
+//                GREEK_AUTHENTIC,
+//                RUSSIAN_ROMANIZED,
+//                RUSSIAN_AUTHENTIC,
+//                SWAHILI,
+//                SOMALI,
+//                ARABIC_ROMANIZED,
+//                HINDI_ROMANIZED,
+//                INUKTITUT,
+//                NORSE,
+//                NAHUATL,
+//                FANTASY_NAME,
+//                FANCY_FANTASY_NAME,
+//                mixAll(RUSSIAN_ROMANIZED, 3, SOMALI, 1),
+//                mixAll(GREEK_ROMANIZED, 1, HINDI_ROMANIZED.removeAccents(), 1),
+//                mixAll(SWAHILI, 7, FRENCH, 3),
+//                mixAll(ARABIC_ROMANIZED, 3, JAPANESE_ROMANIZED, 2),
+//                mixAll(SWAHILI, 3, GREEK_ROMANIZED, 2),
+//                mixAll(GREEK_ROMANIZED, 3, SOMALI, 2),
+//                mixAll(ENGLISH, 3, HINDI_ROMANIZED.removeAccents(), 2),
+//                mixAll(ENGLISH, 3, JAPANESE_ROMANIZED, 2),
+//                mixAll(SOMALI, 3, HINDI_ROMANIZED.removeAccents(), 2),
+//                FRENCH.addModifiers(modifier("([^aeiou])\\1", "$1ph", 0.3),
+//                        modifier("([^aeiou])\\1", "$1ch", 0.4),
+//                        modifier("([^aeiou])\\1", "$1sh", 0.5),
+//                        modifier("([^aeiou])\\1", "$1", 0.9)),
+//                JAPANESE_ROMANIZED.addModifiers(Modifier.DOUBLE_VOWELS),
+//                SOMALI.addModifiers(modifier("([kd])h", "$1"),
+//                        modifier("([pfsgkcb])([aeiouy])", "$1l$2", 0.35),
+//                        /*Language.modifier("a+", "á", 0.18),
+//                        Language.modifier("e+", "é", 0.18),
+//                        Language.modifier("i+", "í", 0.18),
+//                        Language.modifier("o+", "ó", 0.18),
+//                        Language.modifier("u+", "ú", 0.18),*/
+//                        //Language.modifier("aa", "au"),
+//                        modifier("ii", "ai"),
+//                        modifier("uu", "ia"),
+//                        modifier("([aeo])\\1", "$1"),
+//                        modifier("^x", "v"),
+//                        modifier("([^aeiou]|^)u([^aeiou]|$)", "$1a$2", 0.6),
+//                        modifier("([aeiou])[^aeiou]([aeiou])", "$1v$2", 0.06),
+//                        modifier("([aeiou])[^aeiou]([aeiou])", "$1l$2", 0.07),
+//                        modifier("([aeiou])[^aeiou]([aeiou])", "$1n$2", 0.07),
+//                        modifier("([aeiou])[^aeiou]([aeiou])", "$1z$2", 0.08),
+//                        modifier("([^aeiou])[aeiou]+$", "$1ia", 0.35),
+//                        modifier("([^aeiou])[bpdtkgj]", "$1"),
+//                        modifier("[jg]$", "th"),
+//                        modifier("g", "c", 0.92),
+//                        modifier("([aeiou])[wy]$", "$1l", 0.6),
+//                        modifier("([aeiou])[wy]$", "$1n"),
+//                        modifier("[qf]$", "l", 0.4),
+//                        modifier("[qf]$", "n", 0.65),
+//                        modifier("[qf]$", "s"),
+//                        modifier("cy", "sp"),
+//                        modifier("kl", "sk"),
+//                        modifier("qu+", "qui"),
+//                        modifier("q([^u])", "qu$1"),
+//                        modifier("cc", "ch"),
+//                        modifier("[^aeiou]([^aeiou][^aeiou])", "$1"),
+//                        Modifier.NO_DOUBLES
+//                ),
+//                mixAll(INUKTITUT, 3, ARABIC_ROMANIZED, 1, RUSSIAN_ROMANIZED, 1),
+//                mixAll(NORSE, 5, ENGLISH, 3, RUSSIAN_ROMANIZED, 1),
+                mixAll(NORSE.addModifiers(Modifier.SIMPLIFY_NORSE), 2, INUKTITUT, 2, SOMALI, 2),
+                mixAll(NAHUATL, 5, INUKTITUT, 3, ARABIC_ROMANIZED, 2),
+                mixAll(NAHUATL, 5, JAPANESE_ROMANIZED, 2, SOMALI, 1, LOVECRAFT, 1),
+                NORSE.addModifiers(Modifier.SIMPLIFY_NORSE),
                 randomLanguage("Kittenish"),
                 randomLanguage("Puppyspeak"),
                 randomLanguage("Rabbitese"),
                 randomLanguage("Rabbit Language"),
                 randomLanguage("The Roar Of That Slumbering Shadow Which Mankind Wills Itself To Forget"),
+                INUKTITUT,
+                NORSE,
+                NORSE.addModifiers(Modifier.SIMPLIFY_NORSE),
+                NAHUATL
+
                 //Language.RUSSIAN_ROMANIZED.mix(Language.GREEK_ROMANIZED, 0.4),
                 //Language.LOVECRAFT.mix(Language.RUSSIAN_ROMANIZED, 0.4),
                 //Language.randomLanguage(new RNG(2252637788195L)),

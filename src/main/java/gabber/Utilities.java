@@ -1,6 +1,7 @@
 package gabber;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Created by Tommy Ettinger on 10/9/2016.
@@ -77,4 +78,35 @@ public class Utilities {
         }
         return (int) ((result ^= Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58))) ^ (result >>> 32));
     }
+    /**
+     * Makes a LinkedHashMap (LHM) with key and value types inferred from the types of k0 and v0, and considers all
+     * parameters key-value pairs, casting the Objects at positions 0, 2, 4... etc. to K and the objects at positions
+     * 1, 3, 5... etc. to V. If rest has an odd-number length, then it discards the last item. If any pair of items in
+     * rest cannot be cast to the correct type of K or V, then this inserts nothing for that pair and logs information
+     * on the problematic pair to the static Maker.issueLog field.
+     * @param k0 the first key; used to infer the types of other keys if generic parameters aren't specified.
+     * @param v0 the first value; used to infer the types of other values if generic parameters aren't specified.
+     * @param rest an array or vararg of keys and values in pairs; should contain alternating K, V, K, V... elements
+     * @param <K> the type of keys in the returned LinkedHashMap; if not specified, will be inferred from k0
+     * @param <V> the type of values in the returned LinkedHashMap; if not specified, will be inferred from v0
+     * @return a freshly-made LinkedHashMap with K keys and V values, using k0, v0, and the contents of rest to fill it
+     */
+    @SuppressWarnings("unchecked")
+    public static <K, V> LinkedHashMap<K, V> makeLHM(K k0, V v0, Object... rest)
+    {
+        if(rest == null)
+            return makeLHM(k0, v0);
+        LinkedHashMap<K, V> lhm = new LinkedHashMap<K, V>(1 + (rest.length / 2));
+        lhm.put(k0, v0);
+
+        for (int i = 0; i < rest.length - 1; i+=2) {
+            try {
+                lhm.put((K) rest[i], (V) rest[i + 1]);
+            }catch (ClassCastException cce) {
+                cce.printStackTrace();
+            }
+        }
+        return lhm;
+    }
+
 }
