@@ -80,9 +80,10 @@ public class Language implements Serializable {
                             Pattern.compile("[Yy]h([^aeiouy]|$)"),
                             Pattern.compile("([xqy])\\1$"),
                             Pattern.compile("[qi]y$"),
-                            Pattern.compile("[szSZrlRL][^aeioutdfgkcpb][rlsz]"),
+                            Pattern.compile("[szSZrlRL]+?[^aeiouytdfgkcpbmnslrv][rlsz]"),
                             Pattern.compile("[UIuiYy][wy]"),
-                            Pattern.compile("^[UIui][ae]")
+                            Pattern.compile("^[UIui][ae]"),
+                            Pattern.compile("^([^aeiouyl])\\1", 17)
                     },
             englishSanityChecks = new Pattern[]
                     {
@@ -100,10 +101,10 @@ public class Language implements Serializable {
                             Pattern.compile("[Hh][tcszi]?h"),
                             Pattern.compile("[Tt]t[^aeiouy]{2}"),
                             Pattern.compile("[Yy]h([^aeiouy]|$)"),
-                            Pattern.compile("[szSZrlRL][^aeiou][rlsz]"),
+                            Pattern.compile("[szSZrlRL]+?[^aeiouytdfgkcpbmnslr][rlsz]"),
                             Pattern.compile("[UIuiYy][wy]"),
                             Pattern.compile("^[UIui][ae]"),
-                            Pattern.compile("q$")
+                            Pattern.compile("q(?:u?)$")
                     },
             japaneseSanityChecks = new Pattern[]
                     {
@@ -486,7 +487,10 @@ public class Language implements Serializable {
     }
 
     /**
-     * Ia! Ia! Cthulhu Rl'yeh ftaghn! Useful for generating cultist ramblings or unreadable occult texts.
+     * Ia! Ia! Cthulhu Rl'yeh ftaghn! Useful for generating cultist ramblings or unreadable occult texts. You may want
+     * to consider mixing this with multiple other languages using {@link #mixAll(Object...)}; using some very different
+     * languages in low amounts relative to the amount used for this, like {@link #NAHUATL}, {@link #INUKTITUT}, and
+     * {@link #SOMALI}, can alter the aesthetic of the generated text in ways that may help distinguish magic styles.
      * <br>
      * Zvrugg pialuk, ya'as irlemrugle'eith iposh hmo-es nyeighi, glikreirk shaivro'ei!
      */
@@ -584,10 +588,10 @@ public class Language implements Serializable {
             new String[]{}, new int[]{1, 2, 3, 4}, new double[]{5, 7, 4, 1}, 0.45, 0.45, 0.0, 0.2, null, true).register();
 
     /**
-     * Imitation modern French, using (too many of) the accented vowels that are present in the language. Translating it
+     * Imitation modern French, using the (many) accented vowels that are present in the language. Translating it
      * will produce gibberish if it produces anything at all.
-     * <br><br>
-     * Fa veau, ja ri avé re orçe jai braï aisté.
+     * <br>
+     * Bœurter; ubi plaqua se saigui ef brafeur?
      */
     public static final Language FRENCH = new Language(
             new String[]{"a", "a", "a", "e", "e", "e", "i", "i", "o", "u", "a", "a", "a", "e", "e", "e", "i", "i", "o",
@@ -602,14 +606,19 @@ public class Language implements Serializable {
                     "oi", "oie", "oï", "ou", "oû", "oy", "u", "û", "ue",
                     "a", "a", "a", "e", "e", "e", "i", "i", "o", "u", "a", "a", "a", "e", "e", "e", "i", "i", "o",
                     "a", "a", "e", "e", "i", "o", "a", "a", "a", "e", "e", "e", "i", "i", "o",
+                    "a", "a", "a", "e", "e", "e", "i", "i", "o", "u", "a", "a", "a", "e", "e", "e", "i", "i", "o",
+                    "a", "a", "e", "e", "i", "o", "a", "a", "a", "e", "e", "e", "i", "i", "o",
+                    "ai", "ai", "eau", "oi", "oi", "oui", "eu", "au", "au", "ei", "ei", "oe", "oe", "ou", "ou", "ue"
             },
             new String[]{"tr", "ch", "m", "b", "b", "br", "j", "j", "j", "j", "g", "t", "t", "t", "c", "d", "f", "f", "h", "n", "l", "l",
                     "s", "s", "s", "r", "r", "r", "v", "v", "p", "pl", "pr", "bl", "br", "dr", "gl", "gr"},
             new String[]{"cqu", "gu", "qu", "rqu", "nt", "ng", "ngu", "mb", "ll", "nd", "ndr", "nct", "st",
-                    "xt", "mbr", "pl", "g", "gg", "ggr", "gl",
+                    "xt", "mbr", "pl", "g", "gg", "ggr", "gl", "bl", "j", "gn",
                     "m", "m", "mm", "v", "v", "f", "f", "f", "ff", "b", "b", "bb", "d", "d", "dd", "s", "s", "s", "ss", "ss", "ss",
-                    "cl", "cr", "ng", "ç", "ç", "rç"},
-            new String[]{},
+                    "cl", "cr", "ng", "ç", "ç", "rç", "rd", "lg", "rg"},
+            new String[]{"rt", "ch", "m", "b", "b", "lb", "t", "t", "t", "t", "c", "d", "f", "f", "n", "n", "l", "l",
+                    "s", "s", "s", "r", "r", "p", "rd", "ff", "ss", "ll"
+            },
             new String[]{"e", "e", "e", "e", "e", "é", "é", "er", "er", "er", "er", "er", "es", "es", "es", "es", "es", "es",
                     "e", "e", "e", "e", "e", "é", "é", "er", "er", "er", "er", "er", "er", "es", "es", "es", "es", "es",
                     "e", "e", "e", "e", "e", "é", "é", "é", "er", "er", "er", "er", "er", "es", "es", "es", "es", "es",
@@ -617,10 +626,12 @@ public class Language implements Serializable {
                     "ombs", "ommes", "ancs", "ends", "œufs", "erfs", "ongs", "aps", "ats", "ives", "ui", "illes",
                     "aen", "aon", "am", "an", "eun", "ein", "age", "age", "uile", "uin", "um", "un", "un", "un",
                     "aille", "ouille", "eille", "ille", "eur", "it", "ot", "oi", "oi", "oi", "aire", "om", "on", "on",
-                    "im", "in", "in", "ien", "ien", "ion", "il", "eil", "oin", "oint", "iguïté", "ience", "incte",
+                    "im", "in", "in", "ien", "ien", "ine", "ion", "il", "eil", "oin", "oint", "iguïté", "ience", "incte",
                     "ang", "ong", "acré", "eau", "ouche", "oux", "oux", "ect", "ecri", "agne", "uer", "aix", "eth", "ut", "ant",
-                    "anc", "anc", "anche", "ioche", "eaux", "ive", "eur", "ancois", "ecois"},
-            new String[]{}, new int[]{1, 2, 3}, new double[]{18, 7, 2}, 0.35, 1.0, 0.0, 0.4, null, true).register();
+                    "anc", "anc", "anche", "ioche", "eaux", "ive", "eur", "ancois", "ecois", "ente", "enri",
+                    "arc", "oc", "ouis", "arche", "ique", "ique", "ique", "oque", "arque", "uis", "este", "oir", "oir"
+            },
+            new String[]{}, new int[]{1, 2, 3}, new double[]{15, 7, 2}, 0.35, 1.0, 0.0, 0.4, null, true).register();
 
     /**
      * Imitation modern Russian, romanized to use the Latin alphabet. Likely to seem pretty fake to many readers.
@@ -861,7 +872,8 @@ public class Language implements Serializable {
      * Most fonts do not support the glyphs that IAST-standard romanization of Hindi needs, so this uses alternate
      * glyphs from at most Latin Extended-A. Relative to the IAST standard, the glyphs {@code "ṛṝḷḹḍṭṅṇṣṃḥ"} become
      * {@code "ŗŕļĺđţńņşĕĭ"}, with the nth glyph in the first string being substituted with the nth glyph in the second
-     * string.
+     * string. You may want to get a variant on this language with {@link #removeAccents()} if you can't display the
+     * less-commonly-supported glyphs {@code āīūĕĭáíúóŗŕļţĺđńñņśş}.
      * <br>
      * Darvāga yar; ghađhinopŕauka āĕrdur, conśaigaijo śabhodhaĕđū jiviđaudu.
      */
@@ -1240,7 +1252,7 @@ public class Language implements Serializable {
      * just sound insulting if portrayed as realistic. You may want to mix ARABIC_ROMANIZED with a very different kind
      * of language, like GREEK_ROMANIZED or RUSSIAN_AUTHENTIC, to emphasize that this is not a real-world language.
      * <br>
-     * Ul fazuuq; rauhaudda shihlaahuu aadhiizi shiigaa iikas, uk.
+     * Hiijakki al-aafusiib rihit, ibn-ullukh aj shwisari!
      */
     public static final Language ARABIC_ROMANIZED = new Language(
             new String[]{"a", "a", "a", "a", "a", "a", "aa", "aa", "aa", "ai", "au",
@@ -1249,7 +1261,7 @@ public class Language implements Serializable {
                     "u", "u", "u", "uu", "uu",
             },
             new String[]{},
-            new String[]{"gh", "b", "t", "th", "j", "kh", "khr", "d", "dh", "r", "z", "s", "sh", "shw", "dt", "jj",
+            new String[]{"gh", "b", "t", "th", "j", "kh", "khr", "d", "dh", "r", "z", "s", "sh", "shw",
                     "zh", "khm", "g", "f", "q", "k", "l", "m", "n", "h", "w",
                     "q", "k", "q", "k", "b", "d", "f", "l", "z", "zh", "h", "h", "kh", "j", "s", "sh", "shw", "r",
                     "q", "k", "q", "k", "f", "l", "z", "h", "h", "j", "s", "r",
