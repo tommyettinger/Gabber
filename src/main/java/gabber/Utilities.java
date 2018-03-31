@@ -2,6 +2,8 @@ package gabber;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tommy Ettinger on 10/9/2016.
@@ -39,45 +41,81 @@ public class Utilities {
     public static long hash64(final CharSequence data) {
         if (data == null)
             return 0;
-        long z = 0x632BE59BD9B4E019L, result = 1L;
-        for (int i = 0; i < data.length(); i++) {
-            result ^= (z += (data.charAt(i) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * 0xC6BC279692B5CC83L;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.length();
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * data.charAt(i));
         }
-        return result ^ Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58));
+        return result * (a | 1L) ^ (result >>> 27 | result << 37);
     }
 
-    public static long hash64(final Iterable<String> data) {
+    public static long hash64(final CharSequence[] data) {
         if (data == null)
             return 0;
-        long z = 0x632BE59BD9B4E019L, result = 1L;
-        for (String datum : data) {
-            result ^= (z += (hash64(datum) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * 0xC6BC279692B5CC83L;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.length;
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * hash64(data[i]));
         }
-        return result ^ Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58));
+        return result * (a | 1L) ^ (result >>> 27 | result << 37);
+    }
+    public static long hash64(final List<? extends CharSequence> data) {
+        if (data == null)
+            return 0;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.size();
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * hash64(data.get(i)));
+        }
+        return result * (a | 1L) ^ (result >>> 27 | result << 37);
     }
 
+    public static long hash64(final LinkedHashMap<Integer, Double> data) {
+        if (data == null)
+            return 0;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        for (Map.Entry<Integer, Double> datum : data.entrySet()) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * datum.getKey())
+                    + (a ^= 0x8329C6EB9E6AD3E3L * Double.doubleToLongBits(datum.getValue()));
+        }
+        return result * (a | 1L) ^ (result >>> 27 | result << 37);
+    }
+
+    public static long hash64(final Object[] data) {
+        if (data == null)
+            return 0L;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.length;
+        Object o;
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * ((o = data[i]) == null ? -1L : o.hashCode()));
+        }
+        return result * (a | 1L) ^ (result >>> 27 | result << 37);
+    }
 
     public static int hash(final CharSequence[] data) {
         if (data == null)
             return 0;
-        long z = 0x632BE59BD9B4E019L, result = 1L;
-        for (int i = 0; i < data.length; i++) {
-            result ^= (z += (hash64(data[i]) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * 0xC6BC279692B5CC83L;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.length;
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * hash64(data[i]));
         }
-        return (int) ((result ^= Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58))) ^ (result >>> 32));
+        return (int)(result * (a | 1L) ^ (result >>> 27 | result << 37));
     }
 
     public static int hash(final Object[] data) {
         if (data == null)
             return 0;
-        long z = 0x632BE59BD9B4E019L, result = 1L;
+        long result = 0x9E3779B97F4A7C94L, a = 0x632BE59BD9B4E019L;
+        final int len = data.length;
         Object o;
-        for (int i = 0; i < data.length; i++) {
-            o = data[i];
-            result ^= (z += ((o == null ? 0 : o.hashCode()) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * 0xC6BC279692B5CC83L;
+        for (int i = 0; i < len; i++) {
+            result += (a ^= 0x8329C6EB9E6AD3E3L * ((o = data[i]) == null ? -1L : o.hashCode()));
         }
-        return (int) ((result ^= Long.rotateLeft((z * 0xC6BC279692B5CC83L ^ result * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z >>> 58))) ^ (result >>> 32));
+        return (int)(result * (a | 1L) ^ (result >>> 27 | result << 37));
     }
+
     /**
      * Makes a LinkedHashMap (LHM) with key and value types inferred from the types of k0 and v0, and considers all
      * parameters key-value pairs, casting the Objects at positions 0, 2, 4... etc. to K and the objects at positions

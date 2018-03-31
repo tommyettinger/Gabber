@@ -6,7 +6,7 @@
 
     <groupId>com.github.tommyettinger</groupId>
     <artifactId>gabber</artifactId>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
     <modules>
     </modules>
 
@@ -51,14 +51,14 @@
     </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.version>3.3</maven.compiler.version>
-        <maven.javadoc.version>2.10.3</maven.javadoc.version>
+        <maven.compiler.version>3.6.1</maven.compiler.version>
+        <maven.javadoc.version>2.10.4</maven.javadoc.version>
         <maven.resources.version>2.7</maven.resources.version>
-        <maven.source.version>2.4</maven.source.version>
+        <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
         <jdk.version>1.6</jdk.version>
         <junit.version>4.11</junit.version>
-        <regexodus.version>0.1.7</regexodus.version>
+        <regexodus.version>0.1.9</regexodus.version>
     </properties>
 
 
@@ -105,6 +105,37 @@
                         <configuration>
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+            To sign (only needed for Maven Central), add this argument to the mvn command line, just after mvn...
+            -DperformRelease=true
+            -->
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -195,13 +226,12 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <javadocVersion>${jdk.version}</javadocVersion>
                     <links>
-                        <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
                         <link>http://docs.oracle.com/javase/6/docs/api/</link>
                         <link>http://docs.oracle.com/javase/1.5.0/docs/api/</link>
                     </links>
                     <linksource>true</linksource>
-                    <detectOfflineLinks>false</detectOfflineLinks>
+                    <detectOfflineLinks>true</detectOfflineLinks>
                     <!--<additionalparam>-Xdoclint:none</additionalparam>-->
                 </configuration>
             </plugin>

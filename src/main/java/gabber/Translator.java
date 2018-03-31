@@ -304,7 +304,7 @@ se$->z
         }
         syllables <<= 1;
         do {
-            done = language.word(rng, false, syllables >> 1, checks);
+            done = language.word(rng, false, syllables, checks);
             if (cacheLevel < 2 || ++syllables > 5)
                 break;
         } while (reverseDictionary.containsKey(done));

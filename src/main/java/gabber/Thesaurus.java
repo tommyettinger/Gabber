@@ -59,7 +59,7 @@ public class Thesaurus implements Serializable{
 
     /**
      * Allows this Thesaurus to find the exact words in synonyms and, when requested, replace each occurrence with a
-     * different word from the same Collection. Each word in synonyms should have the same part of speech, so "demon"
+     * different word from the same List. Each word in synonyms should have the same part of speech, so "demon"
      * and "devils" should not be in the same list of synonyms (singular noun and plural noun), but "demon" and "devil"
      * could be (each is a singular noun). The Strings in synonyms should all be lower-case, since case is picked up
      * from the text as it is being replaced and not from the words themselves. Proper nouns should normally not be used
@@ -67,10 +67,10 @@ public class Thesaurus implements Serializable{
      * a character's name, like "Dorothy", to "Anne", "Emily", "Cynthia", etc. in the middle of a section about Dorothy.
      * The word matching pattern this uses only matches all-letter words, not words that contain hyphens, apostrophes,
      * or other punctuation.
-     * @param synonyms a Collection of lower-case Strings with similar meaning and the same part of speech
+     * @param synonyms a List of lower-case Strings with similar meaning and the same part of speech
      * @return this for chaining
      */
-    public Thesaurus addSynonyms(Collection<String> synonyms)
+    public Thesaurus addSynonyms(List<String> synonyms)
     {
         if(synonyms.isEmpty())
             return this;
@@ -94,7 +94,7 @@ public class Thesaurus implements Serializable{
      * @param synonyms a Collection of lower-case Strings with similar meaning and the same part of speech
      * @return this for chaining
      */
-    public Thesaurus addCategory(String keyword, Collection<String> synonyms)
+    public Thesaurus addCategory(String keyword, List<String> synonyms)
     {
         if(synonyms.isEmpty())
             return this;
